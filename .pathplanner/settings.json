@@ -1,0 +1,24 @@
+{
+  "robotWidth": 0.84,
+  "robotLength": 0.914,
+  "holonomicMode": true,
+  "pathFolders": [
+    "Calibration",
+    "Extras",
+    "Four Ball",
+    "Green Arrow",
+    "Robin Hood"
+  ],
+  "autoFolders": [
+    "Calibration",
+    "Extras",
+    "Four Ball",
+    "Green Arrow",
+    "Robin Hood"
+  ],
+  "defaultMaxVel": 4.5,
+  "defaultMaxAccel": 4.0,
+  "defaultMaxAngVel": 540.0,
+  "defaultMaxAngAccel": 720.0,
+  "maxModuleSpeed": 4.5
+}

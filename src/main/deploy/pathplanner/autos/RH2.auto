@@ -1,0 +1,38 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 8.28973292584782,
+      "y": 5.7650100590829885
+    },
+    "rotation": 180.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "rh2"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Robin Hood",
+  "choreoAuto": false
+}

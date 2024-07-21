@@ -1,0 +1,53 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
+package com.team6560.frc2024;
+
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
+// import java.io.File;
+
+import com.team6560.frc2024.commands.IntakeCommand;
+import com.team6560.frc2024.controls.ManualControls;
+import com.team6560.frc2024.subsystems.Intake;
+
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+
+public class RobotContainer {
+        // The robot's subsystems and commands are defined here...
+
+        // not public or private so Robot.java has access to it.
+        private final Intake intake;
+        private final IntakeCommand intakeCommand;
+
+        private final ManualControls manualControls = new ManualControls(new XboxController(0), new XboxController(1));
+
+
+        /**
+         * The container for the robot. Contains subsystems, OI devices, and commands.
+         */
+        public RobotContainer() {
+                intake = new Intake();
+
+                intakeCommand = new IntakeCommand(intake, manualControls);
+
+                intake.setDefaultCommand(intakeCommand);
+        }
+
+
+        /**
+         * Use this to pass the autonomous command to the main {@link Robot} class.
+         *
+         * @return the command to run in autonomous
+         */
+        public Command getAutonomousCommand() {
+                return null;
+        }
+
+}
