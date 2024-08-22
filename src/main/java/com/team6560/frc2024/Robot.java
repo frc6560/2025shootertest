@@ -54,8 +54,7 @@ public class Robot extends TimedRobot {
   // teleop mode
 
   @Override
-  public void teleopInit() {
-    // makes sure teleop command stops running
+  public void teleopInit() { // makes sure teleop command stops running
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }

@@ -8,9 +8,11 @@ package com.team6560.frc2024;
 // import com.team6560.frc2024.Constants;
 
 // commands
+import com.team6560.frc2024.commands.DriveCommand;
 import com.team6560.frc2024.commands.IntakeCommand;
 
 // subsystems
+import com.team6560.frc2024.subsystems.Drivetrain;
 import com.team6560.frc2024.subsystems.Intake;
 
 // controls 
@@ -24,9 +26,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 public class RobotContainer {
   // Subsystems
+  private final Drivetrain drivetrain;
   private final Intake intake;
 
   // Commands
+  private final DriveCommand driveCommand;
   private final IntakeCommand intakeCommand;
 
   private final ManualControls manualControls = new ManualControls(new XboxController(0), new XboxController(1));
@@ -34,9 +38,15 @@ public class RobotContainer {
   private final SendableChooser<Command> autoChooser;
 
   public RobotContainer() {
+
+      drivetrain = new Drivetrain();
+      driveCommand = new DriveCommand(drivetrain, manualControls);
+      drivetrain.setDefaultCommand(driveCommand);
+
       intake = new Intake();
       intakeCommand = new IntakeCommand(intake, manualControls);
       intake.setDefaultCommand(intakeCommand);
+
       autoChooser = new SendableChooser<Command>();
       SmartDashboard.putData("Auto Mode", autoChooser);
       SmartDashboard.putNumber("Auto Delay", 0);

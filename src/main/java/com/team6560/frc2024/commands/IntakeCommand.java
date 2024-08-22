@@ -26,9 +26,9 @@ public class IntakeCommand extends Command {
     @Override
     public void execute() {
         if (controls.getReverseIntake()) {
-            intake.setFeedRate(Constants.INTAKE_REVERSE_RATE);
+            intake.setFeedRate(Constants.Intake.INTAKE_REVERSE_RATE);
         } else if (controls.getRunIntake()) {
-            intake.setFeedRate(Constants.INTAKE_FEED_RATE);
+            intake.setFeedRate(Constants.Intake.INTAKE_FEED_RATE);
         } else {
             intake.setFeedRate(0.0);
         }
@@ -40,6 +40,7 @@ public class IntakeCommand extends Command {
       intake.setFeedRate(0.0);
     }
 
+    /* Command always executes (speed is set to zero if no input) */
     @Override
     public boolean isFinished() {
       return false;

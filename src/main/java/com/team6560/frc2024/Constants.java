@@ -4,17 +4,112 @@
 
 package com.team6560.frc2024;
 
+import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
+
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+
+/* Contains all constants, defined in subclasses. */
 public final class Constants {
 
-  /*
-   *  Motor IDs: 
-   *    Intake: 20
-   */
+  /* Universal constants */
+  public static class Global {
+    
+    public static final double MAX_VOLTAGE = 12.0;
 
-  public static final int INTAKE_FEED_MOTOR = 20;
+  }
 
-  public static final double INTAKE_FEED_RATE = 0.6;
+  /* Contains CAN IDs for all electrical components. Lower IDs are prioritized. */
+  public static class CanIDs {
 
-  public static final double INTAKE_REVERSE_RATE = -0.3;
+    // Drivetrain
+    // 1-4: Motor encoders
+    // 5-8: Drive motors
+    // 9-12: Steer motors
+    // 13: Gyro
 
+    public static final int FRONT_LEFT_MODULE_DRIVE_MOTOR_ID = 5;
+    public static final int FRONT_LEFT_MODULE_STEER_MOTOR_ID = 9;
+    public static final int FRONT_LEFT_MODULE_STEER_ENCODER_ID = 1;
+
+    public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR_ID = 8;
+    public static final int FRONT_RIGHT_MODULE_STEER_MOTOR_ID = 12;
+    public static final int FRONT_RIGHT_MODULE_STEER_ENCODER_ID = 4;
+
+    public static final int BACK_LEFT_MODULE_DRIVE_MOTOR_ID = 6;
+    public static final int BACK_LEFT_MODULE_STEER_MOTOR_ID = 10;
+    public static final int BACK_LEFT_MODULE_STEER_ENCODER_ID = 2;
+
+    public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR_ID = 7;
+    public static final int BACK_RIGHT_MODULE_STEER_MOTOR_ID = 11;
+    public static final int BACK_RIGHT_MODULE_STEER_ENCODER_ID = 3;
+
+    public static final int GYRO_ID = 13;
+
+    // Intake
+    // 20: Feed motor
+
+    public static final int INTAKE_FEED_MOTOR_ID = 20;
+
+  }
+
+  /* Constants for drivetrain dimensions, offsets, speeds etc. */
+  public static class Drivetrain {
+
+    // Drivetrain dimensions
+
+    public static final double DRIVETRAIN_TRACKWIDTH_METERS = 0.57785;
+    public static final double DRIVETRAIN_WHEELBASE_METERS = 0.57785;    
+
+    // Swerve kinematics
+
+    public static final SwerveDriveKinematics M_KINEMATICS = new SwerveDriveKinematics(
+      new Translation2d(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0), // Front left
+      new Translation2d(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0), // Front right
+      new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0), // Back left
+      new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0)  // Back right
+    );
+
+    // Max velocities
+
+    public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0 *
+      SdsModuleConfigurations.MK4I_L2.getDriveReduction() *
+      SdsModuleConfigurations.MK4I_L2.getWheelDiameter() * Math.PI;
+
+    public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND /
+      Math.hypot(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0);
+
+    // Steer offsets
+
+    public static final double FRONT_LEFT_MODULE_STEER_OFFSET = 0;
+    public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = 0;
+    public static final double BACK_LEFT_MODULE_STEER_OFFSET = 0;
+    public static final double BACK_RIGHT_MODULE_STEER_OFFSET = 0;
+
+  }
+
+  /* Constants for controlling intake functionality. */
+  public static class Intake {
+
+    public static final double INTAKE_FEED_RATE = 0.6;
+    public static final double INTAKE_REVERSE_RATE = -0.3;
+
+  }  
+
+  /* Constants related to controller functionality, input etc. */
+  public static class Controller {
+
+    public static final double SPEED_MIN_PERCENT = 0.0;
+    public static final double SPEED_INITIAL_PERCENT = 0.4;
+    public static final double SPEED_MAX_PERCENT = 0.6;
+    public static final double SPEED_STEP_PERCENT = .025;
+
+    public static final double TURN_SPEED_MIN_PERCENT = 0.0;
+    public static final double TURN_SPEED_INITIAL_PERCENT = 0.175;
+    public static final double TURN_SPEED_MAX_PERCENT = 0.3;
+    public static final double TURN_SPEED_STEP_PERCENT = .0025;
+
+    public static final double CONTROLLER_DEADBAND = 0.1;
+
+  }
 }
