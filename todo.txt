@@ -1,0 +1,6 @@
+- setChassisSpeeds - why is zero condition checked??
+- clean up 'set' logic for swerve 
+
+questions:
+- why is default state of swerve modules configured at 45 degree angles
+- definition of max velocity function
