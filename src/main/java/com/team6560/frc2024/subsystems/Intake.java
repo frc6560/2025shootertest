@@ -11,13 +11,15 @@ public class Intake extends SubsystemBase {
     
     final TalonFX feedMotor;
 
-    /* Basic intake - no PID (yet) */
+    /* Basic intake - no PID (yet) 
+     * Initialize motor and apply default configuration to keep behavior consistent.
+    */
     public Intake() { 
         this.feedMotor = new TalonFX(Constants.CanIDs.INTAKE_FEED_MOTOR_ID);
-        feedMotor.getConfigurator().apply(new TalonFXConfiguration()); // keeps motor behavior consistent
+        feedMotor.getConfigurator().apply(new TalonFXConfiguration()); 
         ntDispTab("Intake").add("Intake Feed Rate", this::getFeedRate);
     }
-
+    
     /* Set feed speed of intake motor */
     public void setFeedRate(double speed) {
         feedMotor.set(speed);

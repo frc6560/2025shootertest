@@ -1,13 +1,10 @@
 package com.team6560.frc2024.commands;
 
-import com.pathplanner.lib.util.GeometryUtil;
+import com.team6560.frc2024.Constants;
 import com.team6560.frc2024.controls.ManualControls;
 import com.team6560.frc2024.subsystems.Drivetrain;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class DriveCommand extends Command {
@@ -29,18 +26,22 @@ public class DriveCommand extends Command {
     /* Move drivetrain based on controller input and alliance side. */
     @Override
     public void execute() {
-        var alliance = DriverStation.getAlliance().orElse(null);
-        var isRedAlliance = (alliance == DriverStation.Alliance.Red);
+
+        var isRedAlliance = Constants.Global.IS_RED_ALLIANCE;
 
         // Handle gyro reset
         if (controls.driveResetYaw()) {
-            var resetYawRotation = isRedAlliance ? new Rotation2d(Math.PI) : new Rotation2d();
-            drivetrain.zeroGyroscope(resetYawRotation);
+            var resetYawRotation = isRedAlliance ? 
+                Constants.Odometry.DEFAULT_ROTATION_RED_ALLIANCE : 
+                Constants.Odometry.DEFAULT_ROTATION_BLUE_ALLIANCE;
+            drivetrain.setGyroscope(resetYawRotation);
         }
 
         // Handle odometry reset
         if (controls.driveResetGlobalPose()) {
-            var resetPose = isRedAlliance ? GeometryUtil.flipFieldPose(new Pose2d()) : new Pose2d();
+            var resetPose = isRedAlliance ? 
+                Constants.Odometry.DEFAULT_POSE_RED_ALLIANCE : 
+                Constants.Odometry.DEFAULT_POSE_BLUE_ALLLIANCE;
             drivetrain.resetOdometry(resetPose);
         }
 

@@ -1,4 +1,5 @@
-- refactor checking allicance etc - this should be a separate function imo
+- setChassisSpeeds - why is zero condition checked??
+- clean up 'set' logic for swerve 
 
 questions:
 - why is default state of swerve modules configured at 45 degree angles

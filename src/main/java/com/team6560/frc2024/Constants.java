@@ -5,9 +5,15 @@
 package com.team6560.frc2024;
 
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
+import com.swervedrivespecialties.swervelib.MotorType;
+import com.pathplanner.lib.util.GeometryUtil;
 
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
 /* Contains all constants, defined in subclasses. */
 public final class Constants {
@@ -16,6 +22,11 @@ public final class Constants {
   public static class Global {
     
     public static final double MAX_VOLTAGE = 12.0;
+
+    // Current alliance
+
+    public static final Alliance ALLIANCE = DriverStation.getAlliance().orElse(DriverStation.Alliance.Red);
+    public static final boolean IS_RED_ALLIANCE = (ALLIANCE == DriverStation.Alliance.Red);
 
   }
 
@@ -56,6 +67,11 @@ public final class Constants {
   /* Constants for drivetrain dimensions, offsets, speeds etc. */
   public static class Drivetrain {
 
+    // Motors
+
+    public static final MotorType DRIVE_MOTOR_TYPE = MotorType.FALCON;
+    public static final MotorType STEER_MOTOR_TYPE = MotorType.NEO;
+
     // Drivetrain dimensions
 
     public static final double DRIVETRAIN_TRACKWIDTH_METERS = 0.57785;
@@ -81,10 +97,21 @@ public final class Constants {
 
     // Steer offsets
 
-    public static final double FRONT_LEFT_MODULE_STEER_OFFSET = 0;
-    public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = 0;
-    public static final double BACK_LEFT_MODULE_STEER_OFFSET = 0;
-    public static final double BACK_RIGHT_MODULE_STEER_OFFSET = 0;
+    public static final double FRONT_LEFT_MODULE_STEER_OFFSET = 109.3779;
+    public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = 138.9507;
+    public static final double BACK_LEFT_MODULE_STEER_OFFSET = 326.1371;
+    public static final double BACK_RIGHT_MODULE_STEER_OFFSET = 104.7809;
+
+  }
+
+  /* Gyro and odometry constants */
+  public static class Odometry {
+
+    public static final Rotation2d DEFAULT_ROTATION_RED_ALLIANCE = new Rotation2d(Math.PI);
+    public static final Rotation2d DEFAULT_ROTATION_BLUE_ALLIANCE = new Rotation2d();
+
+    public static final Pose2d DEFAULT_POSE_RED_ALLIANCE = GeometryUtil.flipFieldPose(new Pose2d());
+    public static final Pose2d DEFAULT_POSE_BLUE_ALLLIANCE = new Pose2d();
 
   }
 
