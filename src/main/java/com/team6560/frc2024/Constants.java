@@ -123,6 +123,11 @@ public final class Constants {
 
   }  
 
+  public static class Turret {
+    public static final double TURRET_FEED_POS = 100;
+    public static final double TURRET_HOME = 0;
+  }
+  
   /* Constants related to controller functionality, input etc. */
   public static class Controller {
 

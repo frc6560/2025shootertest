@@ -139,4 +139,14 @@ public class ManualControls {
     public void setShooterControllerRumble(double output){
         shooterController.setRumble(RumbleType.kBothRumble, output);
     }
+
+    /* Turret Home - X for now */
+    public boolean setTurretHome() { 
+        return driverController.getXButton();
+    }
+
+    /* Turret Feed Ready - Y for now */
+    public boolean setTurretFeedPos() { 
+        return driverController.getYButton();
+    }
 }
