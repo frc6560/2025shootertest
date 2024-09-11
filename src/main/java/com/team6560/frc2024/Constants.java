@@ -144,4 +144,6 @@ public final class Constants {
     public static final double CONTROLLER_DEADBAND = 0.1;
 
   }
+  
+  public static final int LIMIT_SWITCH_PORT_ID = 6;
 }
