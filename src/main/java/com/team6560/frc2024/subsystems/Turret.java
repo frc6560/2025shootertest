@@ -12,9 +12,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Turret extends SubsystemBase{
     DigitalInput LimitSwitch = new DigitalInput(Constants.LIMIT_SWITCH_PORT_ID);
-    public CANSparkFlex TurretMotor;
-    private Turret() {
-        TurretMotor = new CANSparkFlex(100, MotorType.kBrushless);
+    private CANSparkFlex TurretMotor;
+    public Turret() {
+        TurretMotor = new CANSparkFlex(Constants.CanIDs.TURRET_MOTOR_ID, MotorType.kBrushless);
         //device id is placeholder
 
     }
@@ -24,7 +24,7 @@ public class Turret extends SubsystemBase{
     }
     
 
-    public void getLimitSwitch(){
+    public void stopTurretLimSwitch(){
         if (LimitSwitch.get()) {
             setTurretSpeed(0.0);
         }

@@ -11,7 +11,7 @@ public class TurretCommand extends Command {
 
 
 public void initialize() {
-
+    Turret.setTurretSpeed(0.0);
 }
 
 public void execute() {
@@ -27,8 +27,6 @@ public void execute() {
 public boolean isFinished() {
     return false;
 }
-
-
 
 
 }

@@ -62,6 +62,10 @@ public final class Constants {
 
     public static final int INTAKE_FEED_MOTOR_ID = 20;
 
+    //Placeholder, needs to be changed
+    
+    public static final int TURRET_MOTOR_ID = 100;
+
   }
 
   /* Constants for drivetrain dimensions, offsets, speeds etc. */
@@ -145,5 +149,5 @@ public final class Constants {
 
   }
   
-  public static final int LIMIT_SWITCH_PORT_ID = 6;
+  public static final int LIMIT_SWITCH_PORT_ID = 100;
 }
