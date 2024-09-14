@@ -2,7 +2,6 @@ package com.team6560.frc2024.subsystems;
 
 import com.team6560.frc2024.Constants;
 import com.revrobotics.CANSparkFlex;
-import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -16,7 +15,6 @@ public class Turret extends SubsystemBase{
     public Turret() {
         TurretMotor = new CANSparkFlex(Constants.CanIDs.TURRET_MOTOR_ID, MotorType.kBrushless);
         //device id is placeholder
-
     }
 
     public void setTurretSpeed(double turretSpeed){
@@ -29,12 +27,20 @@ public class Turret extends SubsystemBase{
             setTurretSpeed(0.0);
         }
     }
-    
 
     public double getTurretVelocity(){
         return TurretMotor.getEncoder().getVelocity();
     }
+
     public double getTurretPosition(){
         return TurretMotor.getEncoder().getPosition();  
+    }
+    //
+    public void setTurretHome(){
+        TurretMotor.getEncoder().setPosition(0.0);
+    }
+
+    public void setTurretFeedPos(){
+        TurretMotor.getEncoder().setPosition(4.0);
     }
 }
