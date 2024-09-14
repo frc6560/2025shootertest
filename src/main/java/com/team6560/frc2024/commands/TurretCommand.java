@@ -14,10 +14,10 @@ public class TurretCommand extends Command {
     }
     public void execute() {
         if (controls.setTurretHome()) {
-            Turret.setTurretSpeed(Constants.Turret.TURRET_HOME);
+            Turret.setTurretHome();
         } 
         else if (controls.setTurretFeedPos()) {
-            Turret.setTurretSpeed(Constants.Turret.TURRET_FEED_POS);
+            Turret.setTurretFeedPos();
         }
     }
 

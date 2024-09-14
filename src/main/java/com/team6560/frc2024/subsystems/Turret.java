@@ -32,7 +32,7 @@ public class Turret extends SubsystemBase{
     public double getTurretPosition(){
         return TurretMotor.getEncoder().getPosition();  
     }
-    //
+
     public void setTurretHome(){
         TurretMotor.getEncoder().setPosition(0.0);
     }
@@ -40,4 +40,5 @@ public class Turret extends SubsystemBase{
     public void setTurretFeedPos(){
         TurretMotor.getEncoder().setPosition(4.0);
     }
+    
 }
