@@ -7,8 +7,6 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-
-
 public class Turret extends SubsystemBase{
     DigitalInput LimitSwitch = new DigitalInput(Constants.LIMIT_SWITCH_PORT_ID);
     private CANSparkFlex TurretMotor;
@@ -20,7 +18,6 @@ public class Turret extends SubsystemBase{
     public void setTurretSpeed(double turretSpeed){
         TurretMotor.set(turretSpeed);
     }
-    
 
     public void stopTurretLimSwitch(){
         if (LimitSwitch.get()) {

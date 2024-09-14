@@ -9,24 +9,19 @@ public class TurretCommand extends Command {
     private Turret Turret;
     private ManualControls controls;
 
-
-public void initialize() {
-    Turret.setTurretSpeed(0.0);
-}
-
-public void execute() {
-    if (controls.setTurretHome()) {
-        Turret.setTurretSpeed(Constants.Turret.TURRET_HOME);
-    } 
-    else if (controls.setTurretFeedPos()) {
-        Turret.setTurretSpeed(Constants.Turret.TURRET_FEED_POS);
+    public void initialize() {
+        Turret.setTurretSpeed(0.0);
     }
-    
-}
+    public void execute() {
+        if (controls.setTurretHome()) {
+            Turret.setTurretSpeed(Constants.Turret.TURRET_HOME);
+        } 
+        else if (controls.setTurretFeedPos()) {
+            Turret.setTurretSpeed(Constants.Turret.TURRET_FEED_POS);
+        }
+    }
 
-public boolean isFinished() {
-    return false;
-}
-
-
+    public boolean isFinished() {
+        return false;
+    }
 }
