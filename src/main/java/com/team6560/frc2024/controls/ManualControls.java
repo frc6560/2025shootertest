@@ -141,12 +141,12 @@ public class ManualControls {
     }
 
     /* Turret Home - X for now */
-    public boolean setTurretHome() { 
+    public boolean initTurretHome() { 
         return driverController.getXButton();
     }
 
     /* Turret Feed Ready - Y for now */
-    public boolean setTurretFeedPos() { 
+    public boolean initTurretFeedPos() { 
         return driverController.getYButton();
     }
 }

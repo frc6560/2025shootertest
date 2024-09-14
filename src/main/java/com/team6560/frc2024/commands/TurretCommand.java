@@ -13,10 +13,10 @@ public class TurretCommand extends Command {
         Turret.setTurretSpeed(0.0);
     }
     public void execute() {
-        if (controls.setTurretHome()) {
+        if (controls.initTurretHome()) {
             Turret.setTurretHome();
         } 
-        else if (controls.setTurretFeedPos()) {
+        else if (controls.initTurretFeedPos()) {
             Turret.setTurretFeedPos();
         }
     }
