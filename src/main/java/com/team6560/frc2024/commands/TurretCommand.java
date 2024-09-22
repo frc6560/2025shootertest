@@ -10,14 +10,17 @@ public class TurretCommand extends Command {
     private ManualControls controls;
 
     public void initialize() {
-        Turret.setTurretSpeed(0.0);
+        Turret.stopTurret();
     }
-    public void execute() {
+
+    public void periodic(){
+        Turret.stopTurretLimSwitch();
+
         if (controls.initTurretHome()) {
-            Turret.setTurretHome();
+            Turret.setTurretPosition(Constants.Turret.Home);
         } 
         else if (controls.initTurretFeedPos()) {
-            Turret.setTurretFeedPos();
+            Turret.setTurretPosition(Constants.Turret.FeedPos);
         }
     }
 

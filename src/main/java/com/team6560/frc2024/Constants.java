@@ -128,6 +128,13 @@ public final class Constants {
   }  
 
   public static class Turret {
+    public static double turretSpeed = 4.0;
+
+    public static double Home = 180.0;
+    public static double FeedPos = 90.0;
+
+    public static double minang = 0.0;
+    public static double maxang = 330.0;
   }
   
   /* Constants related to controller functionality, input etc. */
