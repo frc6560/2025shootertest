@@ -59,11 +59,12 @@ public class Drivetrain extends SubsystemBase {
     public SwerveModule[] modules;
     private final SwerveDriveOdometry odometry;
 
-
+    private final double FRONT_LEFT_INITIAL_OFFSET = Constants.Drivetrain.FRONT_LEFT_MODULE_STEER_OFFSET;
+    private final double FRONT_RIGHT_INITIAL_OFFSET = Constants.Drivetrain.FRONT_RIGHT_MODULE_STEER_OFFSET;
+    private final double BACK_LEFT_INITIAL_OFFSET = Constants.Drivetrain.BACK_LEFT_MODULE_STEER_OFFSET;
+    private final double BACK_RIGHT_INITIAL_OFFSET = Constants.Drivetrain.BACK_RIGHT_MODULE_STEER_OFFSET;
 
     // INITIALIZATION
-
-
 
     public Drivetrain() {
 
@@ -76,7 +77,7 @@ public class Drivetrain extends SubsystemBase {
                 Constants.CanIDs.FRONT_LEFT_MODULE_DRIVE_MOTOR_ID, 
                 Constants.CanIDs.FRONT_LEFT_MODULE_STEER_MOTOR_ID, 
                 Constants.CanIDs.FRONT_LEFT_MODULE_STEER_ENCODER_ID, 
-                Constants.Drivetrain.FRONT_LEFT_MODULE_STEER_OFFSET
+                FRONT_LEFT_INITIAL_OFFSET
             ),
             createSwerveModule(
                 tab, 
@@ -84,7 +85,7 @@ public class Drivetrain extends SubsystemBase {
                 Constants.CanIDs.FRONT_RIGHT_MODULE_DRIVE_MOTOR_ID, 
                 Constants.CanIDs.FRONT_RIGHT_MODULE_STEER_MOTOR_ID, 
                 Constants.CanIDs.FRONT_RIGHT_MODULE_STEER_ENCODER_ID, 
-                Constants.Drivetrain.FRONT_RIGHT_MODULE_STEER_OFFSET
+                FRONT_RIGHT_INITIAL_OFFSET
             ),
             createSwerveModule(
                 tab, 
@@ -92,7 +93,7 @@ public class Drivetrain extends SubsystemBase {
                 Constants.CanIDs.BACK_LEFT_MODULE_DRIVE_MOTOR_ID, 
                 Constants.CanIDs.BACK_LEFT_MODULE_STEER_MOTOR_ID, 
                 Constants.CanIDs.BACK_LEFT_MODULE_STEER_ENCODER_ID, 
-                Constants.Drivetrain.BACK_LEFT_MODULE_STEER_OFFSET
+                BACK_LEFT_INITIAL_OFFSET
             ),
             createSwerveModule(
                 tab, 
@@ -100,7 +101,7 @@ public class Drivetrain extends SubsystemBase {
                 Constants.CanIDs.BACK_RIGHT_MODULE_DRIVE_MOTOR_ID, 
                 Constants.CanIDs.BACK_RIGHT_MODULE_STEER_MOTOR_ID, 
                 Constants.CanIDs.BACK_RIGHT_MODULE_STEER_ENCODER_ID, 
-                Constants.Drivetrain.BACK_RIGHT_MODULE_STEER_OFFSET
+                BACK_RIGHT_INITIAL_OFFSET
             )
         };
 

@@ -116,6 +116,12 @@ public class ManualControls {
         return driverController.getBackButton();
     }
 
+    // DRIVETRAIN - SWERVE CALIBRATION
+
+    public boolean setSwerveOffsets() {
+        return driverController.getStartButton() && shooterController.getStartButton();
+    }
+
     // INTAKE
 
     /* Run intake - A for now */
@@ -126,6 +132,30 @@ public class ManualControls {
     /* Reverse intake - B for now */
     public boolean getReverseIntake() { 
         return driverController.getBButton();
+    }
+
+    // FEEDER
+
+    /* Run shooter - X for now */
+    public boolean getRunShooter() { 
+        return driverController.getXButton();
+    }
+
+    /* Reverse shooter - Y for now */
+    public boolean getReverseShooter() { 
+        return driverController.getYButton();
+    }
+
+    // TURRET
+
+    /* Turn turret clockwise */
+    public boolean getTurretClockwise() { 
+        return shooterController.getLeftBumper();
+    }
+
+    /* Turn turret counterclockwise */
+    public boolean getTurretCounterClockwise() { 
+        return shooterController.getRightBumper();
     }
 
     // RUMBLE

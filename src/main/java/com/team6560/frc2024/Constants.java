@@ -7,6 +7,7 @@ package com.team6560.frc2024;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.swervedrivespecialties.swervelib.MotorType;
 import com.pathplanner.lib.util.GeometryUtil;
+import com.revrobotics.SparkPIDController.AccelStrategy;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -14,6 +15,10 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.motorcontrol.Talon;
+
+import com.team6560.frc2024.utility.PID.TalonFXPIDConfigProfile;
+import com.team6560.frc2024.utility.PID.SparkPIDConfigProfile;
 
 /* Contains all constants, defined in subclasses. */
 public final class Constants {
@@ -58,14 +63,34 @@ public final class Constants {
     public static final int GYRO_ID = 13;
 
     // Intake
+    // 14: Transfer motor
     // 20: Feed motor
 
+    public static final int TRANSFER_MOTOR_ID = 14;
     public static final int INTAKE_FEED_MOTOR_ID = 20;
 
+    public static final int TURRET_HORIZONTAL_MOTOR_ID = 13; // same as gyro - fix!
+
+    // NOT IMPLEMENTED
+
+    public static final int FEEDER_MOTOR_ID = 23;
+
+    public static final int SHOOTER_MOTOR_ONE_ID = 15;
+    public static final int SHOOTER_MOTOR_TWO_ID = 16;
+    public static final int SHOOTER_MOTOR_THREE_ID = 17;
   }
 
   /* Constants for drivetrain dimensions, offsets, speeds etc. */
   public static class Drivetrain {
+
+    // Modules enum
+
+    public enum SwerveModuleIndex {
+      FRONT_LEFT,
+      FRONT_RIGHT,
+      BACK_LEFT,
+      BACK_RIGHT;
+    }
 
     // Motors
 
@@ -97,11 +122,10 @@ public final class Constants {
 
     // Steer offsets
 
-    public static final double FRONT_LEFT_MODULE_STEER_OFFSET = 109.3779;
-    public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = 138.9507;
-    public static final double BACK_LEFT_MODULE_STEER_OFFSET = 326.1371;
-    public static final double BACK_RIGHT_MODULE_STEER_OFFSET = 104.7809;
-
+    public static final double FRONT_LEFT_MODULE_STEER_OFFSET = 180.0 + 58.5; 
+    public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = 0;
+    public static final double BACK_LEFT_MODULE_STEER_OFFSET = 256.2 + 180 + 49; // close enough, adjust later 
+    public static final double BACK_RIGHT_MODULE_STEER_OFFSET = 0; // good
   }
 
   /* Gyro and odometry constants */
@@ -122,6 +146,39 @@ public final class Constants {
     public static final double INTAKE_REVERSE_RATE = -0.3;
 
   }  
+
+  /* Shooter feeder constants */
+  public static class Feeder {
+
+    public static final double FEEDER_FEED_RATE = 1.0;
+    public static final double FEEDER_REVERSE_RATE = -1.0;
+
+  }
+
+  /* Constants for controlling shooter functionality */
+  public static class Shooter {
+
+    public static final double SHOOTER_FEED_RATE = 1.0;
+    public static final double SHOOTER_REVERSE_RATE = -0.8;
+
+    public static final TalonFXPIDConfigProfile SHOOTER_PID_PROFILE = new TalonFXPIDConfigProfile(
+      0, 0, 0
+    );
+
+  }
+
+  /* Constants for controlling amp functionality */
+  public static class Amp {
+
+    public static final double AMP_FEED_RATE = 0.6;
+    public static final double AMP_REVERSE_RATE = -0.3;
+
+  }
+
+  public static class TurretHorizontal {
+
+    public static final double TURRET_HORIZONTAL_RATE = 0.3;
+  }
 
   /* Constants related to controller functionality, input etc. */
   public static class Controller {

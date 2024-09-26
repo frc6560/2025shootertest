@@ -29,6 +29,11 @@ public class DriveCommand extends Command {
 
         var isRedAlliance = Constants.Global.IS_RED_ALLIANCE;
 
+        // Set swerve offsets - implement after testing cancoder values
+        if (controls.setSwerveOffsets()) {
+
+        }
+
         // Handle gyro reset
         if (controls.driveResetYaw()) {
             var resetYawRotation = isRedAlliance ? 

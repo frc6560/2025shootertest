@@ -10,10 +10,15 @@ package com.team6560.frc2024;
 // commands
 import com.team6560.frc2024.commands.DriveCommand;
 import com.team6560.frc2024.commands.IntakeCommand;
-
+import com.team6560.frc2024.commands.FeederCommand;
+import com.team6560.frc2024.commands.ShooterCommand;
+import com.team6560.frc2024.commands.TurretHorizontalCommand;
 // subsystems
 import com.team6560.frc2024.subsystems.Drivetrain;
 import com.team6560.frc2024.subsystems.Intake;
+import com.team6560.frc2024.subsystems.Feeder;
+import com.team6560.frc2024.subsystems.Shooter;
+import com.team6560.frc2024.subsystems.TurretHorizontal;
 
 // controls 
 import com.team6560.frc2024.controls.ManualControls;
@@ -26,12 +31,18 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 public class RobotContainer {
   // Subsystems
-  private final Drivetrain drivetrain;
+  // private final Drivetrain drivetrain;
   private final Intake intake;
+  private final Feeder feeder;
+  private final Shooter shooter;
+  private final TurretHorizontal turretHorizontal;
 
   // Commands
-  private final DriveCommand driveCommand;
+  // private final DriveCommand driveCommand;
   private final IntakeCommand intakeCommand;
+  private final FeederCommand feederCommand;
+  private final ShooterCommand shooterCommand;
+  private final TurretHorizontalCommand turretHorizontalCommand;
 
   private final ManualControls manualControls = new ManualControls(new XboxController(0), new XboxController(1));
 
@@ -39,13 +50,27 @@ public class RobotContainer {
 
   public RobotContainer() {
 
+      /* 
       drivetrain = new Drivetrain();
       driveCommand = new DriveCommand(drivetrain, manualControls);
       drivetrain.setDefaultCommand(driveCommand);
+      */
 
       intake = new Intake();
       intakeCommand = new IntakeCommand(intake, manualControls);
       intake.setDefaultCommand(intakeCommand);
+
+      feeder = new Feeder();
+      feederCommand = new FeederCommand(feeder, manualControls);
+      feeder.setDefaultCommand(feederCommand);
+
+      shooter = new Shooter();
+      shooterCommand = new ShooterCommand(shooter, manualControls);
+      shooter.setDefaultCommand(shooterCommand);
+
+      turretHorizontal = new TurretHorizontal();
+      turretHorizontalCommand = new TurretHorizontalCommand(turretHorizontal, manualControls);
+      turretHorizontal.setDefaultCommand(turretHorizontalCommand);
 
       autoChooser = new SendableChooser<Command>();
       SmartDashboard.putData("Auto Mode", autoChooser);
