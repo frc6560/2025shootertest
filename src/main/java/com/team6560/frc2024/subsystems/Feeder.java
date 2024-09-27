@@ -8,6 +8,8 @@ import com.team6560.frc2024.Constants;
 
 import static com.team6560.frc2024.utility.NetworkTable.NtValueDisplay.ntDispTab;
 
+import javax.sound.sampled.BooleanControl;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 // Amp subsystem controls
@@ -40,13 +42,9 @@ public class Feeder extends SubsystemBase {
         return feederMotor.get();
     }
 
-    public void GamePieceChecker(){
-        LaserCan.Measurement GamePieceMeasurement = lc.GetMeasurement();
-        if (GamePieceMeasurement.distance_mm <= 20.0) {
-            Constants.GamePieceIn = true;
-        }
-        else{
-            Constants.GamePieceIn = false;
-        }
+    /*checks if there is a game piece within 20 mm of the sensor */
+    public boolean gamePieceDetected() {
+        double distance = lc.GetMeasurement().distance_mm;
+        return (distance <= Constants.MaxDistToGamePiece);
     }
 }

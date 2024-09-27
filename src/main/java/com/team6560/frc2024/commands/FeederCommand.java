@@ -22,13 +22,13 @@ public class FeederCommand extends Command {
   }
   /*check if Game piece is in transfer*/
   public void periodic(){
-    GamePieceChecker();
+    gamePieceChecker();
   }
 
   /* Checks feeder button press */
   @Override
   public void execute() {
-    if (controls.getRunFeeder()) {
+    if (controls.getRunFeeder() && !feeder.gamePieceDetected()) {
       feeder.setFeedRate(Constants.Feeder.FEEDER_FEED_RATE);
     } else {
       feeder.setFeedRate(0.0);
