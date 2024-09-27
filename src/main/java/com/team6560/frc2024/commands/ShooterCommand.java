@@ -25,9 +25,9 @@ public class ShooterCommand extends Command {
   @Override
   public void execute() {
     if (controls.getReverseShooter()) {
-      shooter.setFeedRate(Constants.Feeder.FEEDER_FEED_RATE);
+      shooter.setFeedRate(Constants.Shooter.SHOOTER_FEED_RATE);
     } else if (controls.getRunShooter()) {
-      shooter.setFeedRate(Constants.Feeder.FEEDER_REVERSE_RATE);
+      shooter.setFeedRate(Constants.Shooter.SHOOTER_REVERSE_RATE);
     } else {
       shooter.setFeedRate(0.0);
     }
