@@ -28,10 +28,8 @@ public class FeederCommand extends Command {
   /* Checks feeder button press */
   @Override
   public void execute() {
-    if (controls.getReverseShooter()) {
+    if (controls.getRunFeeder()) {
       feeder.setFeedRate(Constants.Feeder.FEEDER_FEED_RATE);
-    } else if (controls.getRunShooter()) {
-      feeder.setFeedRate(Constants.Feeder.FEEDER_REVERSE_RATE);
     } else {
       feeder.setFeedRate(0.0);
     }

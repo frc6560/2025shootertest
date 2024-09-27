@@ -27,7 +27,7 @@ public class TurretHorizontalCommand extends Command {
     if (controls.getTurretClockwise()) {
       turretHorizontal.setFeedRate(Constants.TurretHorizontal.TURRET_HORIZONTAL_RATE);
     } else if (controls.getTurretCounterClockwise()) {
-      turretHorizontal.setFeedRate(Constants.TurretHorizontal.TURRET_HORIZONTAL_RATE);
+      turretHorizontal.setFeedRate(-Constants.TurretHorizontal.TURRET_HORIZONTAL_RATE);
     } else {
       turretHorizontal.setFeedRate(0.0);
     }

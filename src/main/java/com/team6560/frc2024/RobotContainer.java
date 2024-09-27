@@ -12,12 +12,14 @@ import com.team6560.frc2024.commands.DriveCommand;
 import com.team6560.frc2024.commands.IntakeCommand;
 import com.team6560.frc2024.commands.FeederCommand;
 import com.team6560.frc2024.commands.ShooterCommand;
+import com.team6560.frc2024.commands.TurretVerticalCommand;
 import com.team6560.frc2024.commands.TurretHorizontalCommand;
 // subsystems
 import com.team6560.frc2024.subsystems.Drivetrain;
 import com.team6560.frc2024.subsystems.Intake;
 import com.team6560.frc2024.subsystems.Feeder;
 import com.team6560.frc2024.subsystems.Shooter;
+import com.team6560.frc2024.subsystems.TurretVertical;
 import com.team6560.frc2024.subsystems.TurretHorizontal;
 
 // controls 
@@ -36,6 +38,7 @@ public class RobotContainer {
   private final Feeder feeder;
   private final Shooter shooter;
   private final TurretHorizontal turretHorizontal;
+  private final TurretVertical turretVertical;
 
   // Commands
   // private final DriveCommand driveCommand;
@@ -43,6 +46,7 @@ public class RobotContainer {
   private final FeederCommand feederCommand;
   private final ShooterCommand shooterCommand;
   private final TurretHorizontalCommand turretHorizontalCommand;
+  private final TurretVerticalCommand turretVerticalCommand;
 
   private final ManualControls manualControls = new ManualControls(new XboxController(0), new XboxController(1));
 
@@ -71,6 +75,10 @@ public class RobotContainer {
       turretHorizontal = new TurretHorizontal();
       turretHorizontalCommand = new TurretHorizontalCommand(turretHorizontal, manualControls);
       turretHorizontal.setDefaultCommand(turretHorizontalCommand);
+
+      turretVertical = new TurretVertical();
+      turretVerticalCommand = new TurretVerticalCommand(turretVertical, manualControls);
+      turretVertical.setDefaultCommand(turretVerticalCommand);
 
       autoChooser = new SendableChooser<Command>();
       SmartDashboard.putData("Auto Mode", autoChooser);

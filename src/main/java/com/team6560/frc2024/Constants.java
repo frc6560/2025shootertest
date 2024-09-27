@@ -78,6 +78,8 @@ public final class Constants {
     public static final int SHOOTER_MOTOR_ONE_ID = 15;
     public static final int SHOOTER_MOTOR_TWO_ID = 16;
     public static final int SHOOTER_MOTOR_THREE_ID = 17;
+
+    public static final int TURRET_VERTICAL_MOTOR_ID = 18;
   }
 
   /* Constants for drivetrain dimensions, offsets, speeds etc. */
@@ -160,8 +162,8 @@ public final class Constants {
   /* Constants for controlling shooter functionality */
   public static class Shooter {
 
-    public static final double SHOOTER_FEED_RATE = 1.0;
-    public static final double SHOOTER_REVERSE_RATE = -0.8;
+    public static final double SHOOTER_FEED_RATE = -1.0;
+    public static final double SHOOTER_REVERSE_RATE = 0.8;
 
     public static final TalonFXPIDConfigProfile SHOOTER_PID_PROFILE = new TalonFXPIDConfigProfile(
       0, 0, 0
@@ -169,11 +171,10 @@ public final class Constants {
 
   }
 
-  /* Constants for controlling amp functionality */
-  public static class Amp {
+  public static class TurretVertical {
 
-    public static final double AMP_FEED_RATE = 0.6;
-    public static final double AMP_REVERSE_RATE = -0.3;
+    public static final double TURRET_VERTICAL_FEED_RATE = 0.5;
+    public static final double TURRET_VERTICAL_REVERSE_RATE = -0.5;
 
   }
 

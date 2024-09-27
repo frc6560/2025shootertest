@@ -136,9 +136,17 @@ public class ManualControls {
 
     // FEEDER
 
+    /* Run feeder (fire) - Right shoulder button */
+    
+    public boolean getRunFeeder() {
+        return driverController.getRightBumper();
+    }
+
+    // SHOOTER
+
     /* Run shooter - X for now */
     public boolean getRunShooter() { 
-        return driverController.getXButton();
+        return driverController.getLeftBumper();
     }
 
     /* Reverse shooter - Y for now */
@@ -148,14 +156,24 @@ public class ManualControls {
 
     // TURRET
 
+    /* Bring turret up */
+    public boolean getTurretUp() { 
+        return shooterController.getRightBumper();
+    }
+
+    /* Bring turret down */
+    public boolean getTurretDown() { 
+        return shooterController.getLeftBumper();
+    }
+
     /* Turn turret clockwise */
     public boolean getTurretClockwise() { 
-        return shooterController.getLeftBumper();
+        return shooterController.getAButton();
     }
 
     /* Turn turret counterclockwise */
     public boolean getTurretCounterClockwise() { 
-        return shooterController.getRightBumper();
+        return shooterController.getBButton();
     }
 
     // RUMBLE
