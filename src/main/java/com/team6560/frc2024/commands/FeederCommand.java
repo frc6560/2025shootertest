@@ -20,10 +20,6 @@ public class FeederCommand extends Command {
   public void initialize() {
     feeder.setFeedRate(0.0);
   }
-  /*check if Game piece is in transfer*/
-  public void periodic(){
-    gamePieceChecker();
-  }
 
   /* Checks feeder button press */
   @Override
