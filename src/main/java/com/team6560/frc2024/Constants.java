@@ -4,6 +4,7 @@
 
 package com.team6560.frc2024;
 
+import edu.wpi.first.wpilibj.I2C;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.swervedrivespecialties.swervelib.MotorType;
 import com.pathplanner.lib.util.GeometryUtil;
@@ -65,6 +66,7 @@ public final class Constants {
     // Intake
     // 14: Transfer motor
     // 20: Feed motor
+    public static final int DISTANCE_SENSOR_ID = 90;
 
     public static final int TRANSFER_MOTOR_ID = 14;
     public static final int INTAKE_FEED_MOTOR_ID = 20;
@@ -80,6 +82,8 @@ public final class Constants {
     public static final int SHOOTER_MOTOR_THREE_ID = 17;
 
     public static final int TURRET_VERTICAL_MOTOR_ID = 18;
+
+
   }
 
   /* Constants for drivetrain dimensions, offsets, speeds etc. */
