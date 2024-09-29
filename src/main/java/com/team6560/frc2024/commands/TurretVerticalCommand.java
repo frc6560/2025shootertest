@@ -24,9 +24,10 @@ public class TurretVerticalCommand extends Command {
   /* Checks feeder button press */
   @Override
   public void execute() {
-    if (controls.getTurretDown() && turretVertical.getTurretAngle() > 20) { 
+    //the limit switches are connected somehow - electrical issue
+    if (controls.getTurretDown() && turretVertical.getTurretAngle() > 20 && !turretVertical.bottomLimitDown()) { 
       turretVertical.setFeedRate(Constants.TurretVertical.TURRET_VERTICAL_FEED_RATE);
-    } else if (controls.getTurretUp() && turretVertical.getTurretAngle() < 60) {
+    } else if (controls.getTurretUp() && turretVertical.getTurretAngle() < 60 && !turretVertical.topLimitDown()) {
       turretVertical.setFeedRate(Constants.TurretVertical.TURRET_VERTICAL_REVERSE_RATE);
     } else {
       turretVertical.setFeedRate(0.0);
