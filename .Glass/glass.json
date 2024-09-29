@@ -1,0 +1,71 @@
+{
+  "NetworkTables": {
+    "Persistent Values": {
+      "open": false
+    },
+    "Retained Values": {
+      "open": false
+    },
+    "transitory": {
+      "Amp": {
+        "open": true
+      },
+      "Controls": {
+        "open": true
+      },
+      "Intake": {
+        "open": true
+      },
+      "Shooter": {
+        "open": true
+      },
+      "SmartDashboard": {
+        "open": true
+      },
+      "Turret Horizontal": {
+        "open": true
+      },
+      "TurretVertical": {
+        "open": true
+      }
+    },
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/SmartDashboard/Auto Mode": "String Chooser"
+    }
+  },
+  "NetworkTables Info": {
+    "visible": true
+  },
+  "NetworkTables Settings": {
+    "mode": "Client (NT4)",
+    "serverTeam": "9978"
+  },
+  "Plots": {
+    "Plot <0>": {
+      "plots": [
+        {
+          "backgroundColor": [
+            0.05999999865889549,
+            0.05999999865889549,
+            0.05999999865889549,
+            0.9399999976158142
+          ],
+          "height": 155
+        },
+        {
+          "backgroundColor": [
+            0.05999999865889549,
+            0.05999999865889549,
+            0.05999999865889549,
+            0.9399999976158142
+          ],
+          "height": 155
+        }
+      ],
+      "window": {
+        "visible": false
+      }
+    }
+  }
+}

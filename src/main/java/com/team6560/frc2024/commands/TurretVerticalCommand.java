@@ -24,9 +24,9 @@ public class TurretVerticalCommand extends Command {
   /* Checks feeder button press */
   @Override
   public void execute() {
-    if (controls.getTurretDown()) {
+    if (controls.getTurretDown() && turretVertical.getTurretAngle() > 20) { 
       turretVertical.setFeedRate(Constants.TurretVertical.TURRET_VERTICAL_FEED_RATE);
-    } else if (controls.getTurretUp()) {
+    } else if (controls.getTurretUp() && turretVertical.getTurretAngle() < 60) {
       turretVertical.setFeedRate(Constants.TurretVertical.TURRET_VERTICAL_REVERSE_RATE);
     } else {
       turretVertical.setFeedRate(0.0);

@@ -33,7 +33,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 public class RobotContainer {
   // Subsystems
-  // private final Drivetrain drivetrain;
+  private final Drivetrain drivetrain;
   private final Intake intake;
   private final Feeder feeder;
   private final Shooter shooter;
@@ -41,7 +41,7 @@ public class RobotContainer {
   private final TurretVertical turretVertical;
 
   // Commands
-  // private final DriveCommand driveCommand;
+  private final DriveCommand driveCommand;
   private final IntakeCommand intakeCommand;
   private final FeederCommand feederCommand;
   private final ShooterCommand shooterCommand;
@@ -53,12 +53,10 @@ public class RobotContainer {
   private final SendableChooser<Command> autoChooser;
 
   public RobotContainer() {
-
-      /* 
+      
       drivetrain = new Drivetrain();
       driveCommand = new DriveCommand(drivetrain, manualControls);
       drivetrain.setDefaultCommand(driveCommand);
-      */
 
       intake = new Intake();
       intakeCommand = new IntakeCommand(intake, manualControls);

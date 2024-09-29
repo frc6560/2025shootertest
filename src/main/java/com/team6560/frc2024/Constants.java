@@ -60,13 +60,13 @@ public final class Constants {
     public static final int BACK_RIGHT_MODULE_STEER_MOTOR_ID = 11;
     public static final int BACK_RIGHT_MODULE_STEER_ENCODER_ID = 3;
 
-    public static final int GYRO_ID = 13;
+    public static final int GYRO_ID = 14;
 
     // Intake
     // 14: Transfer motor
     // 20: Feed motor
 
-    public static final int TRANSFER_MOTOR_ID = 14;
+    public static final int TRANSFER_MOTOR_ID = 19;
     public static final int INTAKE_FEED_MOTOR_ID = 20;
 
     public static final int TURRET_HORIZONTAL_MOTOR_ID = 13; // same as gyro - fix!
@@ -124,10 +124,10 @@ public final class Constants {
 
     // Steer offsets
 
-    public static final double FRONT_LEFT_MODULE_STEER_OFFSET = 180.0 + 58.5; 
-    public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = 0;
-    public static final double BACK_LEFT_MODULE_STEER_OFFSET = 256.2 + 180 + 49; // close enough, adjust later 
-    public static final double BACK_RIGHT_MODULE_STEER_OFFSET = 0; // good
+    public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -6.5039;
+    public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -72.4218;
+    public static final double BACK_LEFT_MODULE_STEER_OFFSET = -76.2011; 
+    public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -177.1875;
   }
 
   /* Gyro and odometry constants */
@@ -174,11 +174,21 @@ public final class Constants {
     public static final double TURRET_VERTICAL_FEED_RATE = 0.5;
     public static final double TURRET_VERTICAL_REVERSE_RATE = -0.5;
 
+    public static final double TURRET_VERTICAL_GEAR_RATIO = 25 * 360 / 40;
+
+    public static final int UPPER_LIMIT_SWITCH_ID = 9;
+    public static final int LOWER_LIMIT_SWITCH_ID = 8;
   }
 
   public static class TurretHorizontal {
 
     public static final double TURRET_HORIZONTAL_RATE = 0.3;
+
+    public static final double TURRET_HORIZONTAL_GEAR_RATIO = 5 * 400 / 46;
+
+    // not sure which is left and right
+    public static final int LEFT_LIMIT_SWITCH_ID = 6; 
+    public static final int RIGHT_LIMIT_SWITCH_ID = 7;
   }
 
   /* Constants related to controller functionality, input etc. */
