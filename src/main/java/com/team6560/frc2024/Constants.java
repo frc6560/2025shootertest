@@ -154,8 +154,6 @@ public final class Constants {
 
     public static final double FEEDER_FEED_RATE = 1.0;
     public static final double FEEDER_REVERSE_RATE = -1.0;
-
-    public static Boolean GamePieceIn = False;
     
   }
 

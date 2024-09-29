@@ -1,6 +1,5 @@
 package com.team6560.frc2024.subsystems;
 
-import au.grapplerobotics.LaserCan;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
@@ -12,14 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 // Amp subsystem controls
 public class Feeder extends SubsystemBase {
-    public LaserCan lc;
     final CANSparkMax feederMotor;
-
-    public DistanceSensor(){
-        lc = new LaserCan(0);
-        lc.setRangingMode(LaserCan.RangingMode.SHORT);
-        lc.setTimingBudget(LaserCan.TimingBudget.TIMING_BUDGET_33MS);
-    }
 
     public Feeder() { 
         this.feederMotor = new CANSparkMax(Constants.CanIDs.FEEDER_MOTOR_ID, MotorType.kBrushless);
@@ -38,15 +30,5 @@ public class Feeder extends SubsystemBase {
     /* Get feed speed of motor */
     public double getFeedRate() {
         return feederMotor.get();
-    }
-
-    public void GamePieceChecker(){
-        LaserCan.Measurement GamePieceMeasurement = lc.GetMeasurement();
-        if (GamePieceMeasurement.distance_mm <= 20.0) {
-            Constants.GamePieceIn = true;
-        }
-        else{
-            Constants.GamePieceIn = false;
-        }
     }
 }
