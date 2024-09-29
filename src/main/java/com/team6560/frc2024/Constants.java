@@ -124,10 +124,17 @@ public final class Constants {
 
     // Steer offsets
 
-    public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -6.5039;
-    public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -72.4218;
-    public static final double BACK_LEFT_MODULE_STEER_OFFSET = -76.2011; 
-    public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -177.1875;
+    public static final double FRONT_LEFT_MODULE_STEER_OFFSET = 0;
+    public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = 0;
+    public static final double BACK_LEFT_MODULE_STEER_OFFSET = 0; 
+    public static final double BACK_RIGHT_MODULE_STEER_OFFSET = 0;
+
+
+
+    // public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -6.5039;
+    // public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -72.4218;
+    // public static final double BACK_LEFT_MODULE_STEER_OFFSET = -76.2011; 
+    // public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -177.1875;
   }
 
   /* Gyro and odometry constants */
@@ -171,8 +178,8 @@ public final class Constants {
 
   public static class TurretVertical {
 
-    public static final double TURRET_VERTICAL_FEED_RATE = 0.5;
-    public static final double TURRET_VERTICAL_REVERSE_RATE = -0.5;
+    public static final double TURRET_VERTICAL_FEED_RATE = -0.5;
+    public static final double TURRET_VERTICAL_REVERSE_RATE = 0.5;
 
     public static final double TURRET_VERTICAL_GEAR_RATIO = 25 * 360 / 40;
 
