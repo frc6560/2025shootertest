@@ -22,13 +22,17 @@ public class TurretVertical extends SubsystemBase {
     public TurretVertical() { 
         this.motor = new TalonFX(Constants.CanIDs.TURRET_VERTICAL_MOTOR_ID); 
         this.motor.getConfigurator().apply(new TalonFXConfiguration().withOpenLoopRamps(new OpenLoopRampsConfigs().withVoltageOpenLoopRampPeriod(0.5)));
+        PIDConfigFuncs.configurePID(motor, Constants.TurretVertical.TURRET_VERTICAL_PID_PROFILE);
         this.topLimitSwitch = new DigitalInput(Constants.TurretVertical.UPPER_LIMIT_SWITCH_ID);
         this.bottomLimitSwitch = new DigitalInput(Constants.TurretVertical.LOWER_LIMIT_SWITCH_ID);
+        this.setEncoderToBottom();
         ntDispTab("Turret Vertical")
             .add("Turret Vertical Feed Rate", this::getFeedRate)
             .add("Turret Vertical Angle", this::getTurretAngle)
             .add("Upper limit switch", this::topLimitDown)  
-            .add("Lower limit switch", this::bottomLimitDown);        
+            .add("Lower limit switch", this::bottomLimitDown)   
+            .add("Upper soft limit", this::getUpperBound)
+            .add("Lower soft limit", this::getLowerBound);
     }   
     
     /* Set feed speed of motor */
@@ -38,7 +42,7 @@ public class TurretVertical extends SubsystemBase {
 
     /* Get feed speed of motor */
     public double getFeedRate() {
-        return motor.get();
+        return motor.getVelocity().getValueAsDouble();
     }
 
     /* Get position reading from encoder */ 
@@ -54,5 +58,25 @@ public class TurretVertical extends SubsystemBase {
     /* Get bottom limit switch reading */
     public boolean bottomLimitDown() {
         return !this.bottomLimitSwitch.get();
+    }
+
+    /* show lower bound on ntTable */
+    public double getLowerBound() {
+        return Constants.TurretVertical.TURRET_LOWER_SOFT_LIMIT;
+    }
+
+    /* show upper bound on ntTable */
+    public double getUpperBound() {
+        return Constants.TurretVertical.TURRET_UPPER_SOFT_LIMIT;
+    }
+
+    /* Set encoder to the bottom limit switch position */
+    public void setEncoderToBottom() {
+        this.motor.setPosition(Constants.TurretVertical.TURRET_LOWER_HARD_LIMIT / 360);
+    }
+
+    /* Set encoder to the upper limit switch position */
+    public void setEncoderToTop() {
+        this.motor.setPosition(Constants.TurretVertical.TURRET_UPPER_HARD_LIMIT / 360);
     }
 }

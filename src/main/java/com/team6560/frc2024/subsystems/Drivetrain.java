@@ -37,23 +37,12 @@ public class Drivetrain extends SubsystemBase {
     private final Pigeon2 pigeon = new Pigeon2(Constants.CanIDs.GYRO_ID);
     private Field2d fieldOnlyOdometry;
 
-    /* 
-
     // Default states for each module correspond to an X shape (brake mode)
     public static final SwerveModuleState[] DEFAULT_MODULE_STATES = new SwerveModuleState[] {
         new SwerveModuleState(0.0, Rotation2d.fromDegrees(45.0)),
         new SwerveModuleState(0.0, Rotation2d.fromDegrees(-45.0)),
         new SwerveModuleState(0.0, Rotation2d.fromDegrees(-45.0)),
         new SwerveModuleState(0.0, Rotation2d.fromDegrees(45.0))
-    };
-
-    */
-
-    public static final SwerveModuleState[] DEFAULT_MODULE_STATES = new SwerveModuleState[] {
-        new SwerveModuleState(0.0, Rotation2d.fromDegrees(0)),
-        new SwerveModuleState(0.0, Rotation2d.fromDegrees(0)),
-        new SwerveModuleState(0.0, Rotation2d.fromDegrees(0)),
-        new SwerveModuleState(0.0, Rotation2d.fromDegrees(0))
     };
 
     public SwerveModule[] modules;

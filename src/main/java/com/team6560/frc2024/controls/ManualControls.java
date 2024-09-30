@@ -88,12 +88,12 @@ public class ManualControls {
 
     /* Get processed X-Axis driverController left stick input. */
     public double driveX() {
-        return - modifyAxis(driverController.getLeftY() * speed.get());
+        return modifyAxis(driverController.getLeftY() * speed.get());
     }
 
     /* Get processed Y-Axis driverController left stick input. */
     public double driveY() {
-        return - modifyAxis(driverController.getLeftX() * speed.get());
+        return modifyAxis(driverController.getLeftX() * speed.get());
     }
 
     /* Get processed X-Axis driverController right stick input. */
@@ -114,12 +114,6 @@ public class ManualControls {
     /* Resets robot position */
     public boolean driveResetGlobalPose() {
         return driverController.getBackButton();
-    }
-
-    // DRIVETRAIN - SWERVE CALIBRATION
-
-    public boolean setSwerveOffsets() {
-        return driverController.getStartButton() && shooterController.getStartButton();
     }
 
     // INTAKE

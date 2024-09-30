@@ -9,6 +9,7 @@ import com.swervedrivespecialties.swervelib.MotorType;
 import com.pathplanner.lib.util.GeometryUtil;
 import com.revrobotics.SparkPIDController.AccelStrategy;
 
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -124,17 +125,11 @@ public final class Constants {
 
     // Steer offsets
 
-    public static final double FRONT_LEFT_MODULE_STEER_OFFSET = 0;
-    public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = 0;
-    public static final double BACK_LEFT_MODULE_STEER_OFFSET = 0; 
-    public static final double BACK_RIGHT_MODULE_STEER_OFFSET = 0;
+    public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(184.83); // good
+    public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(75.56+180); // from 105
+    public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(76.35+180); // reversed
+    public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(354.02); // good
 
-
-
-    // public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -6.5039;
-    // public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -72.4218;
-    // public static final double BACK_LEFT_MODULE_STEER_OFFSET = -76.2011; 
-    // public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -177.1875;
   }
 
   /* Gyro and odometry constants */
@@ -178,13 +173,24 @@ public final class Constants {
 
   public static class TurretVertical {
 
-    public static final double TURRET_VERTICAL_FEED_RATE = -0.5;
-    public static final double TURRET_VERTICAL_REVERSE_RATE = 0.5;
+    public static final double TURRET_VERTICAL_FEED_RATE = -0.3;
+    public static final double TURRET_VERTICAL_REVERSE_RATE = 0.3;
 
     public static final double TURRET_VERTICAL_GEAR_RATIO = 25 * 360 / 40;
 
+    public static final double TURRET_LOWER_SOFT_LIMIT = 20.0;
+    public static final double TURRET_UPPER_SOFT_LIMIT = 60.0;
+
+    public static final double TURRET_LOWER_HARD_LIMIT = 7.0;
+    public static final double TURRET_UPPER_HARD_LIMIT = 71.0;
+
     public static final int UPPER_LIMIT_SWITCH_ID = 9;
     public static final int LOWER_LIMIT_SWITCH_ID = 8;
+
+    public static final TalonFXPIDConfigProfile TURRET_VERTICAL_PID_PROFILE = new TalonFXPIDConfigProfile(
+      .5, 0, 0
+    );
+
   }
 
   public static class TurretHorizontal {
