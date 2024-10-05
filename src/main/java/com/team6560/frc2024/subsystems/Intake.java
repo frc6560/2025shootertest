@@ -6,6 +6,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import edu.wpi.first.wpilibj.AnalogInput;
 
 import com.team6560.frc2024.Constants;
 import static com.team6560.frc2024.utility.NetworkTable.NtValueDisplay.ntDispTab;
@@ -17,8 +18,10 @@ public class Intake extends SubsystemBase {
     
     final TalonFX intakeMotor;
     final CANSparkMax transferMotor;
+    final AnalogInput distanceSensor;
 
     public Intake() { 
+        this.distanceSensor = new AnalogInput(7);
         this.intakeMotor = new TalonFX(Constants.CanIDs.INTAKE_FEED_MOTOR_ID);
         this.intakeMotor.getConfigurator().apply((new TalonFXConfiguration()).withOpenLoopRamps(new OpenLoopRampsConfigs().withVoltageOpenLoopRampPeriod(0.5)));
         this.transferMotor = new CANSparkMax(Constants.CanIDs.TRANSFER_MOTOR_ID, MotorType.kBrushless);
@@ -28,7 +31,8 @@ public class Intake extends SubsystemBase {
         this.transferMotor.setOpenLoopRampRate(0.5);
         ntDispTab("Intake")
             .add("Transfer Feed Rate", this::getTransferFeedRate)
-            .add("Intake Feed Rate", this::getIntakeFeedRate);
+            .add("Intake Feed Rate", this::getIntakeFeedRate)
+            .add("Distance sensor", this::gamePieceIn);
     }   
     
     /* Set feed speed of intake motor. Intake motor is reversed. */
@@ -45,5 +49,10 @@ public class Intake extends SubsystemBase {
     /* Get feed speed of transfer motor */
     public double getTransferFeedRate() {
         return transferMotor.get();
+    }
+
+    /* Get game piece in status */
+    public double gamePieceIn() {
+        return this.distanceSensor.getVoltage();
     }
 }

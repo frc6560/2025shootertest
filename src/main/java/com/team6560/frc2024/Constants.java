@@ -162,24 +162,24 @@ public final class Constants {
   /* Constants for controlling shooter functionality */
   public static class Shooter {
 
-    public static final double SHOOTER_FEED_RATE = -1.0;
+    public static final double SHOOTER_FEED_RATE = -0.9;
     public static final double SHOOTER_REVERSE_RATE = 0.8;
 
     public static final TalonFXPIDConfigProfile SHOOTER_PID_PROFILE = new TalonFXPIDConfigProfile(
-      0, 0, 0
+      1.2, 0.1, 0.01
     );
 
   }
 
   public static class TurretVertical {
 
-    public static final double TURRET_VERTICAL_FEED_RATE = -0.3;
-    public static final double TURRET_VERTICAL_REVERSE_RATE = 0.3;
+    public static final double TURRET_VERTICAL_UP_RATE = -0.3;
+    public static final double TURRET_VERTICAL_DOWN_RATE = 0.3;
 
     public static final double TURRET_VERTICAL_GEAR_RATIO = 25 * 360 / 40;
 
-    public static final double TURRET_LOWER_SOFT_LIMIT = 20.0;
-    public static final double TURRET_UPPER_SOFT_LIMIT = 60.0;
+    public static final double TURRET_LOWER_SOFT_LIMIT = 13.0;
+    public static final double TURRET_UPPER_SOFT_LIMIT = 53.0;
 
     public static final double TURRET_LOWER_HARD_LIMIT = 7.0;
     public static final double TURRET_UPPER_HARD_LIMIT = 71.0;

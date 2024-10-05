@@ -24,19 +24,12 @@ public class TurretVerticalCommand extends Command {
   /* Checks feeder button press */
   @Override
   public void execute() {
-    if (turretVertical.bottomLimitDown()) {
-      turretVertical.setEncoderToBottom();
-    }
-    else if (turretVertical.topLimitDown()) {
-      turretVertical.setEncoderToTop();
-    }
-
     if (controls.getTurretDown() && turretVertical.getTurretAngle() > Constants.TurretVertical.TURRET_LOWER_SOFT_LIMIT && !turretVertical.bottomLimitDown()) { 
-      turretVertical.setFeedRate(Constants.TurretVertical.TURRET_VERTICAL_FEED_RATE);
+      turretVertical.setFeedRate(Constants.TurretVertical.TURRET_VERTICAL_UP_RATE);
     } else if (controls.getTurretUp() && turretVertical.getTurretAngle() < Constants.TurretVertical.TURRET_UPPER_SOFT_LIMIT && !turretVertical.topLimitDown()) {
-      turretVertical.setFeedRate(Constants.TurretVertical.TURRET_VERTICAL_REVERSE_RATE);
-    } else {
-      turretVertical.setFeedRate(0.0);
+      turretVertical.setFeedRate(Constants.TurretVertical.TURRET_VERTICAL_DOWN_RATE);
+    } else { // ensures shooter maintains position, doesn't fall
+      turretVertical.setFeedRate(0.02 * Math.cos(Math.toRadians(turretVertical.getTurretAngle())));
     }
   }
 

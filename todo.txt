@@ -1,16 +1,5 @@
-find out TalonFX open loop pid time config options DONE ??
-    this.intakeMotor.getConfigurator().apply((new TalonFXConfiguration()).withOpenLoopRamps(new OpenLoopRampsConfigs().withVoltageOpenLoopRampPeriod(0.5)));
-
-find sparkmax pid parameter (what is it modifying) DONE
-    time in seconds to reach 100% speed
-
-attempt to calibrate drivetrain and see what happens
-
-write basic shooter code (no pid or open loop and test)
-    - find canIDs of shooter motors
-
-reference 2022 code for turret raising code - turret not wired yet but ok
-
-errors:
-- cansparkmax object created for can id 14, which is not a sparkmax
-
+edit positioning for turret:
+    - set position from limit switch hit, use delta to complete position   
+        - boolean to keep track of top/bottom
+    - track motor position at this time
+    - multiply delta by ratio to get further position

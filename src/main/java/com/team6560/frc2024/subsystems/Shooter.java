@@ -22,15 +22,18 @@ public class Shooter extends SubsystemBase {
         this.motor2 = new TalonFX(Constants.CanIDs.SHOOTER_MOTOR_TWO_ID);
         this.motor3 = new TalonFX(Constants.CanIDs.SHOOTER_MOTOR_THREE_ID);
 
-        this.motor1.getConfigurator().apply(new TalonFXConfiguration().withOpenLoopRamps(new OpenLoopRampsConfigs().withVoltageOpenLoopRampPeriod(0.5)));
-        this.motor2.getConfigurator().apply(new TalonFXConfiguration().withOpenLoopRamps(new OpenLoopRampsConfigs().withVoltageOpenLoopRampPeriod(0.5)));
-        this.motor3.getConfigurator().apply(new TalonFXConfiguration().withOpenLoopRamps(new OpenLoopRampsConfigs().withVoltageOpenLoopRampPeriod(0.5)));
+        // this.motor1.getConfigurator().apply(new TalonFXConfiguration().withOpenLoopRamps(new OpenLoopRampsConfigs().withVoltageOpenLoopRampPeriod(0.5)));
+        // this.motor2.getConfigurator().apply(new TalonFXConfiguration().withOpenLoopRamps(new OpenLoopRampsConfigs().withVoltageOpenLoopRampPeriod(0.5)));
+        // this.motor3.getConfigurator().apply(new TalonFXConfiguration().withOpenLoopRamps(new OpenLoopRampsConfigs().withVoltageOpenLoopRampPeriod(0.5)));
 
-        // PIDConfigFuncs.configurePID(motor1, Constants.Shooter.SHOOTER_PID_PROFILE);
-        // PIDConfigFuncs.configurePID(motor2, Constants.Shooter.SHOOTER_PID_PROFILE);
-        // PIDConfigFuncs.configurePID(motor3, Constants.Shooter.SHOOTER_PID_PROFILE);
+        PIDConfigFuncs.configurePID(motor1, Constants.Shooter.SHOOTER_PID_PROFILE);
+        PIDConfigFuncs.configurePID(motor2, Constants.Shooter.SHOOTER_PID_PROFILE);
+        PIDConfigFuncs.configurePID(motor3, Constants.Shooter.SHOOTER_PID_PROFILE);
 
-        ntDispTab("Shooter").add("Shooter Feed Rate", this::getFeedRate);
+        ntDispTab("Shooter")
+            .add("Shooter Feed Rate", this::getFeedRate)
+            .add("Shooter Velocity RPM", this::getVelocity)
+            .add("Shooter Max Velocity RPM", this::getMaxVelocity);
     }   
     
     /* Set feed speed of motors */
@@ -45,4 +48,13 @@ public class Shooter extends SubsystemBase {
         return motor3.get();
     }
 
+    /* Get velocity of flywheels in RPM (1.5 GR) */
+    public double getVelocity() {
+        return motor3.getVelocity().getValueAsDouble() * 60.0 * 1.5;
+    }
+
+    /* Get max velocity of flywheels in RPM (1.5 GR) */
+    public double getMaxVelocity() {
+        return 4250.0 * 1.5;
+    }
 }
