@@ -46,4 +46,10 @@ public class Intake extends SubsystemBase {
     public double getTransferFeedRate() {
         return transferMotor.get();
     }
+
+    public boolean GamePieceIn() {
+        final AnalogInput AnalogInput = new AnalogInput(Constants.CanIDs.DISTANCE_SENSOR_ID);
+        double AnalogVoltage = AnalogInput.getVoltage();
+        return (AnalogVoltage >= 1.6);
+    }
 }
