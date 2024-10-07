@@ -145,6 +145,11 @@ public final class Constants {
 
   }
 
+  //Limlitthingys
+  public static class Limelight {
+    public static final double APRILTAG_HEIGHT = 0.174;
+  }
+
   /* Constants for controlling intake functionality. */
   public static class Intake {
 
