@@ -1,25 +1,15 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package com.team6560.frc2024;
 
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.swervedrivespecialties.swervelib.MotorType;
 import com.pathplanner.lib.util.GeometryUtil;
-import com.revrobotics.SparkPIDController.AccelStrategy;
 
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.motorcontrol.Talon;
-
-import com.team6560.frc2024.utility.PID.TalonFXPIDConfigProfile;
-import com.team6560.frc2024.utility.PID.SparkPIDConfigProfile;
 
 /* Contains all constants, defined in subclasses. */
 public final class Constants {
@@ -63,24 +53,21 @@ public final class Constants {
 
     public static final int GYRO_ID = 14;
 
-    // Intake
-    // 14: Transfer motor
-    // 20: Feed motor
+    // Other subsystems
 
-    public static final int TRANSFER_MOTOR_ID = 19;
-    public static final int INTAKE_FEED_MOTOR_ID = 20;
-
-    public static final int TURRET_HORIZONTAL_MOTOR_ID = 13; // same as gyro - fix!
-
-    // NOT IMPLEMENTED
-
-    public static final int FEEDER_MOTOR_ID = 23;
+    public static final int TURRET_MOTOR_ID = 13;
 
     public static final int SHOOTER_MOTOR_ONE_ID = 15;
     public static final int SHOOTER_MOTOR_TWO_ID = 16;
     public static final int SHOOTER_MOTOR_THREE_ID = 17;
 
-    public static final int TURRET_VERTICAL_MOTOR_ID = 18;
+    public static final int HOOD_MOTOR_ID = 18;
+
+    public static final int INTAKE_TRANSFER_MOTOR_ID = 19;
+    public static final int INTAKE_FEED_MOTOR_ID = 20;
+
+    public static final int TRANSFER_MOTOR_ID = 23;
+
   }
 
   /* Constants for drivetrain dimensions, offsets, speeds etc. */
@@ -143,67 +130,6 @@ public final class Constants {
 
   }
 
-  /* Constants for controlling intake functionality. */
-  public static class Intake {
-
-    public static final double INTAKE_FEED_RATE = 0.6;
-    public static final double INTAKE_REVERSE_RATE = -0.3;
-
-  }  
-
-  /* Shooter feeder constants */
-  public static class Feeder {
-
-    public static final double FEEDER_FEED_RATE = 1.0;
-    public static final double FEEDER_REVERSE_RATE = -1.0;
-    
-  }
-
-  /* Constants for controlling shooter functionality */
-  public static class Shooter {
-
-    public static final double SHOOTER_FEED_RATE = -0.9;
-    public static final double SHOOTER_REVERSE_RATE = 0.8;
-
-    public static final TalonFXPIDConfigProfile SHOOTER_PID_PROFILE = new TalonFXPIDConfigProfile(
-      1.2, 0.1, 0.01
-    );
-
-  }
-
-  public static class TurretVertical {
-
-    public static final double TURRET_VERTICAL_UP_RATE = -0.3;
-    public static final double TURRET_VERTICAL_DOWN_RATE = 0.3;
-
-    public static final double TURRET_VERTICAL_GEAR_RATIO = 25 * 360 / 40;
-
-    public static final double TURRET_LOWER_SOFT_LIMIT = 13.0;
-    public static final double TURRET_UPPER_SOFT_LIMIT = 53.0;
-
-    public static final double TURRET_LOWER_HARD_LIMIT = 7.0;
-    public static final double TURRET_UPPER_HARD_LIMIT = 71.0;
-
-    public static final int UPPER_LIMIT_SWITCH_ID = 9;
-    public static final int LOWER_LIMIT_SWITCH_ID = 8;
-
-    public static final TalonFXPIDConfigProfile TURRET_VERTICAL_PID_PROFILE = new TalonFXPIDConfigProfile(
-      .5, 0, 0
-    );
-
-  }
-
-  public static class TurretHorizontal {
-
-    public static final double TURRET_HORIZONTAL_RATE = 0.3;
-
-    public static final double TURRET_HORIZONTAL_GEAR_RATIO = 5 * 400 / 46;
-
-    // not sure which is left and right
-    public static final int LEFT_LIMIT_SWITCH_ID = 6; 
-    public static final int RIGHT_LIMIT_SWITCH_ID = 7;
-  }
-
   /* Constants related to controller functionality, input etc. */
   public static class Controller {
 
@@ -213,11 +139,24 @@ public final class Constants {
     public static final double SPEED_STEP_PERCENT = .025;
 
     public static final double TURN_SPEED_MIN_PERCENT = 0.0;
-    public static final double TURN_SPEED_INITIAL_PERCENT = 0.175;
+    public static final double TURN_SPEED_INITIAL_PERCENT = 0.125;
     public static final double TURN_SPEED_MAX_PERCENT = 0.3;
     public static final double TURN_SPEED_STEP_PERCENT = .0025;
 
     public static final double CONTROLLER_DEADBAND = 0.1;
 
   }
+
+  /* Constants for limelight */
+  public static class Limelight {
+   
+    // all measurements in inches
+    
+    public static final double LIMELIGHT_ANGLE_DEGREES = 40.0;
+    public static final double LIMELIGHT_HEIGHT = 14.7;
+
+    public final static double ID_3_HEIGHT = 51.875, ID_4_HEIGHT = 51.875, ID_7_HEIGHT = 51.875, ID_8_HEIGHT = 51.875;  
+
+  }
+
 }

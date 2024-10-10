@@ -10,17 +10,18 @@ package com.team6560.frc2024;
 // commands
 import com.team6560.frc2024.commands.DriveCommand;
 import com.team6560.frc2024.commands.IntakeCommand;
-import com.team6560.frc2024.commands.FeederCommand;
+import com.team6560.frc2024.commands.TransferCommand;
 import com.team6560.frc2024.commands.ShooterCommand;
-import com.team6560.frc2024.commands.TurretVerticalCommand;
-import com.team6560.frc2024.commands.TurretHorizontalCommand;
+import com.team6560.frc2024.commands.HoodCommand;
+import com.team6560.frc2024.commands.TurretCommand;
+
 // subsystems
 import com.team6560.frc2024.subsystems.Drivetrain;
 import com.team6560.frc2024.subsystems.Intake;
-import com.team6560.frc2024.subsystems.Feeder;
+import com.team6560.frc2024.subsystems.Transfer;
 import com.team6560.frc2024.subsystems.Shooter;
-import com.team6560.frc2024.subsystems.TurretVertical;
-import com.team6560.frc2024.subsystems.TurretHorizontal;
+import com.team6560.frc2024.subsystems.Hood;
+import com.team6560.frc2024.subsystems.Turret;
 
 // controls 
 import com.team6560.frc2024.controls.ManualControls;
@@ -32,21 +33,22 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class RobotContainer {
+  
   // Subsystems
   private final Drivetrain drivetrain;
   private final Intake intake;
-  private final Feeder feeder;
+  private final Transfer feeder;
   private final Shooter shooter;
-  private final TurretHorizontal turretHorizontal;
-  private final TurretVertical turretVertical;
+  private final Turret turret;
+  private final Hood hood;
 
   // Commands
   private final DriveCommand driveCommand;
   private final IntakeCommand intakeCommand;
-  private final FeederCommand feederCommand;
+  private final TransferCommand feederCommand;
   private final ShooterCommand shooterCommand;
-  private final TurretHorizontalCommand turretHorizontalCommand;
-  private final TurretVerticalCommand turretVerticalCommand;
+  private final TurretCommand turretHorizontal;
+  private final HoodCommand hoodCommand;
 
   private final ManualControls manualControls = new ManualControls(new XboxController(0), new XboxController(1));
 
@@ -62,21 +64,21 @@ public class RobotContainer {
       intakeCommand = new IntakeCommand(intake, manualControls);
       intake.setDefaultCommand(intakeCommand);
 
-      feeder = new Feeder();
-      feederCommand = new FeederCommand(feeder, manualControls);
+      feeder = new Transfer();
+      feederCommand = new TransferCommand(feeder, manualControls);
       feeder.setDefaultCommand(feederCommand);
 
       shooter = new Shooter();
       shooterCommand = new ShooterCommand(shooter, manualControls);
       shooter.setDefaultCommand(shooterCommand);
 
-      turretHorizontal = new TurretHorizontal();
-      turretHorizontalCommand = new TurretHorizontalCommand(turretHorizontal, manualControls);
-      turretHorizontal.setDefaultCommand(turretHorizontalCommand);
+      turret = new Turret();
+      turretHorizontal = new TurretCommand(turret, manualControls);
+      turret.setDefaultCommand(turretHorizontal);
 
-      turretVertical = new TurretVertical();
-      turretVerticalCommand = new TurretVerticalCommand(turretVertical, manualControls);
-      turretVertical.setDefaultCommand(turretVerticalCommand);
+      hood = new Hood();
+      hoodCommand = new HoodCommand(hood, manualControls);
+      hood.setDefaultCommand(hoodCommand);
 
       autoChooser = new SendableChooser<Command>();
       SmartDashboard.putData("Auto Mode", autoChooser);

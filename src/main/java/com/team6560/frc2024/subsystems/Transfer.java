@@ -9,26 +9,38 @@ import static com.team6560.frc2024.utility.NetworkTable.NtValueDisplay.ntDispTab
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-// Amp subsystem controls
-public class Feeder extends SubsystemBase {
+public class Transfer extends SubsystemBase {
     final CANSparkMax feederMotor;
 
-    public Feeder() { 
-        this.feederMotor = new CANSparkMax(Constants.CanIDs.FEEDER_MOTOR_ID, MotorType.kBrushless);
+    private static final double FEED_RATE = 1.0;
+    private static final double REVERSE_RATE = -1.0;
+
+    public Transfer() { 
+        this.feederMotor = new CANSparkMax(Constants.CanIDs.TRANSFER_MOTOR_ID, MotorType.kBrushless);
         this.feederMotor.restoreFactoryDefaults();
         this.feederMotor.setIdleMode(IdleMode.kBrake);
         this.feederMotor.setSmartCurrentLimit(25);
         this.feederMotor.setOpenLoopRampRate(0.1);
-        ntDispTab("Amp").add("Amp Feed Rate", this::getFeedRate);
+        ntDispTab("Transfer").add("Transfer Feed Rate", this::getFeedRate);
     }   
     
-    /* Set feed speed of motor */
     public void setFeedRate(double speed) {
         feederMotor.set(speed);
     }
 
-    /* Get feed speed of motor */
-    public double getFeedRate() {
+    public void run() {
+        this.setFeedRate(FEED_RATE);
+    }
+
+    public void reverse() {
+        this.setFeedRate(REVERSE_RATE);
+    }
+
+    public void stop() {
+        this.setFeedRate(0.0);
+    }
+
+    private double getFeedRate() {
         return feederMotor.get();
     }
 }

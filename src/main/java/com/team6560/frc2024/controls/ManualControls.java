@@ -1,12 +1,8 @@
 package com.team6560.frc2024.controls;
 
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.networktables.NetworkTableInstance;
 
 import com.team6560.frc2024.Constants;
-
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 
 import com.team6560.frc2024.utility.NumberStepper;
 import com.team6560.frc2024.utility.PovNumberStepper;
@@ -19,8 +15,6 @@ public class ManualControls {
 
     private final PovNumberStepper speed;
     private final PovNumberStepper turnSpeed;
-
-    private NetworkTableEntry ntIntakeSpeed;
 
     /* ManualControls is initialized with two controllers - one for driving, another for shooting (turret control) */
     public ManualControls(XboxController driverController, XboxController shooterController) {
@@ -56,11 +50,6 @@ public class ManualControls {
         .add("Y Joystick", this::driveY)
         .add("X Joystick", this::driveX)
         .add("Rotation Joystick", this::driveRotationX);
-
-        // Creating a NetworkTableEntry object instead of a NetworkTable allows for retrieving data using .get()
-
-        ntIntakeSpeed = NetworkTableInstance.getDefault().getTable("Intake").getEntry("speed");
-        ntIntakeSpeed.setDouble(0.0);
     }
 
     // UTIL
@@ -82,6 +71,10 @@ public class ManualControls {
         value = Math.copySign(value * value, value);
         return value;
     }
+
+
+    // FIRST DRIVER
+
 
     // DRIVING
     // Note: driveX/driveY use reversed controller axis due to 90 degree orientation of robot in relation to field coordinates.
@@ -118,67 +111,42 @@ public class ManualControls {
 
     // INTAKE
 
-    /* Run intake - A for now */
     public boolean getRunIntake() { 
-        return driverController.getAButton();
-    }
-
-    /* Reverse intake - B for now */
-    public boolean getReverseIntake() { 
-        return driverController.getBButton();
-    }
-
-    // FEEDER
-
-    /* Run feeder (fire) - Right shoulder button */
-    
-    public boolean getRunFeeder() {
         return driverController.getRightBumper();
     }
 
-    // SHOOTER
-
-    /* Run shooter - X for now */
-    public boolean getRunShooter() { 
+    public boolean getReverseIntake() { 
         return driverController.getLeftBumper();
     }
 
-    /* Reverse shooter - Y for now */
-    public boolean getReverseShooter() { 
-        return driverController.getYButton();
-    }
 
-    // TURRET
 
-    /* Bring turret up */
-    public boolean getTurretUp() { 
+    // SECOND DRIVER
+
+
+
+    // SHOOTER
+
+    /* Run transfer (fire) - Right shoulder button */
+    
+    public boolean getRunTransfer() {
         return shooterController.getRightBumper();
     }
 
-    /* Bring turret down */
-    public boolean getTurretDown() { 
+    /* Accelerate shooter - left shoulder button */
+    public boolean getRunShooter() { 
         return shooterController.getLeftBumper();
     }
 
-    /* Turn turret clockwise */
-    public boolean getTurretClockwise() { 
+    public boolean getFancyHood() {
+        return shooterController.getStartButton();
+    }
+
+    // LIMELIGHT
+
+    /* Activate limelight tracking */
+    public boolean getUseLimelight() {
         return shooterController.getAButton();
     }
 
-    /* Turn turret counterclockwise */
-    public boolean getTurretCounterClockwise() { 
-        return shooterController.getBButton();
-    }
-
-    // RUMBLE
-
-    /* Set rumble level of driver controller. Accepts values from 0 to 1 */
-    public void setDriverControllerRumble(double output){
-        driverController.setRumble(RumbleType.kBothRumble, output);
-    }
-    
-    /* Set rumble level of shooter controller. Accepts values from 0 to 1 */
-    public void setShooterControllerRumble(double output){
-        shooterController.setRumble(RumbleType.kBothRumble, output);
-    }
 }

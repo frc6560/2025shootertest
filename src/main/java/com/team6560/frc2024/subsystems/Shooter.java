@@ -1,20 +1,24 @@
 package com.team6560.frc2024.subsystems;
 
-import com.ctre.phoenix6.configs.OpenLoopRampsConfigs;
-import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.team6560.frc2024.Constants;
 import com.team6560.frc2024.utility.PID.PIDConfigFuncs;
+import com.team6560.frc2024.utility.PID.TalonFXPIDConfigProfile;
+
 import static com.team6560.frc2024.utility.NetworkTable.NtValueDisplay.ntDispTab;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-// Subsystem for shooter (top of turret)
 public class Shooter extends SubsystemBase {
 
     final TalonFX motor1;
     final TalonFX motor2;
     final TalonFX motor3;
+
+    private static final double SHOOTER_FEED_RATE = 0.9;
+    public static final TalonFXPIDConfigProfile SHOOTER_PID_PROFILE = new TalonFXPIDConfigProfile(
+      1.2, 0.1, 0.01
+    );
 
     // IMPORTANT: all motors are coupled and must have same speed
     public Shooter() { 
@@ -22,13 +26,9 @@ public class Shooter extends SubsystemBase {
         this.motor2 = new TalonFX(Constants.CanIDs.SHOOTER_MOTOR_TWO_ID);
         this.motor3 = new TalonFX(Constants.CanIDs.SHOOTER_MOTOR_THREE_ID);
 
-        // this.motor1.getConfigurator().apply(new TalonFXConfiguration().withOpenLoopRamps(new OpenLoopRampsConfigs().withVoltageOpenLoopRampPeriod(0.5)));
-        // this.motor2.getConfigurator().apply(new TalonFXConfiguration().withOpenLoopRamps(new OpenLoopRampsConfigs().withVoltageOpenLoopRampPeriod(0.5)));
-        // this.motor3.getConfigurator().apply(new TalonFXConfiguration().withOpenLoopRamps(new OpenLoopRampsConfigs().withVoltageOpenLoopRampPeriod(0.5)));
-
-        PIDConfigFuncs.configurePID(motor1, Constants.Shooter.SHOOTER_PID_PROFILE);
-        PIDConfigFuncs.configurePID(motor2, Constants.Shooter.SHOOTER_PID_PROFILE);
-        PIDConfigFuncs.configurePID(motor3, Constants.Shooter.SHOOTER_PID_PROFILE);
+        PIDConfigFuncs.configurePID(motor1, SHOOTER_PID_PROFILE);
+        PIDConfigFuncs.configurePID(motor2, SHOOTER_PID_PROFILE);
+        PIDConfigFuncs.configurePID(motor3, SHOOTER_PID_PROFILE);
 
         ntDispTab("Shooter")
             .add("Shooter Feed Rate", this::getFeedRate)
@@ -36,25 +36,31 @@ public class Shooter extends SubsystemBase {
             .add("Shooter Max Velocity RPM", this::getMaxVelocity);
     }   
     
-    /* Set feed speed of motors */
     public void setFeedRate(double speed) {
         motor1.set(-speed);
         motor2.set(speed);
         motor3.set(speed);
     }
 
-    /* Get feed speed of motors */
-    public double getFeedRate() {
+    public void run() {
+        setFeedRate(SHOOTER_FEED_RATE);
+    }
+
+    public void stop() {
+        setFeedRate(0.0);
+    }
+
+    private double getFeedRate() {
         return motor3.get();
     }
 
-    /* Get velocity of flywheels in RPM (1.5 GR) */
-    public double getVelocity() {
+    // Velocity is that of flywheels (1.5 ascending GR)
+
+    private double getVelocity() {
         return motor3.getVelocity().getValueAsDouble() * 60.0 * 1.5;
     }
 
-    /* Get max velocity of flywheels in RPM (1.5 GR) */
-    public double getMaxVelocity() {
+    private double getMaxVelocity() {
         return 4250.0 * 1.5;
     }
 }

@@ -1,5 +1,2 @@
-edit positioning for turret:
-    - set position from limit switch hit, use delta to complete position   
-        - boolean to keep track of top/bottom
-    - track motor position at this time
-    - multiply delta by ratio to get further position
+limelight:
+http://10.99.78.65:5801/
