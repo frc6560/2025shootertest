@@ -83,7 +83,11 @@ public class Hood extends SubsystemBase {
     
             if (Math.abs(angleDifference) < ANGLE_THRESHOLD) {
                 double slowDownFactor = Math.max(0.1, Math.abs(angleDifference) / ANGLE_THRESHOLD);
-                this.setFeedRate(UP_RATE * slowDownFactor); 
+                if (currentAngle < targetAngle) {
+                    this.setFeedRate(UP_RATE * slowDownFactor); 
+                } else {
+                    this.setFeedRate(DOWN_RATE * slowDownFactor);
+                }
             } else if (currentAngle < targetAngle - ANGLE_THRESHOLD) {
                 this.setFeedRate(UP_RATE);
             } else if (currentAngle > targetAngle + ANGLE_THRESHOLD) {

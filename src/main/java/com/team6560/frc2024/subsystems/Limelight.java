@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Limelight extends SubsystemBase {
 
   private final NetworkTable networkTable = NetworkTableInstance.getDefault().getTable("limelight");
-    
+
   private final NetworkTableEntry ntX = networkTable.getEntry("tx");
   private final NetworkTableEntry ntY = networkTable.getEntry("ty");
   private final NetworkTableEntry ntV = networkTable.getEntry("tv");
@@ -50,7 +50,7 @@ public class Limelight extends SubsystemBase {
   public double getLatency() {
     // 11 additional ms is recommended for image capture latency
     // divided by 1000.0 to convert ms to s
-    return (ntL.getDouble(0.0) + ntcL.getDouble(11.0))/1000.0;
+    return (ntL.getDouble(0.0) + ntcL.getDouble(11.0)) / 1000.0;
   }
 
   public double getID() {
@@ -70,7 +70,6 @@ public class Limelight extends SubsystemBase {
       case 7: heightDifference = (Constants.Limelight.ID_7_HEIGHT - Constants.Limelight.LIMELIGHT_HEIGHT);
       case 8: heightDifference = (Constants.Limelight.ID_8_HEIGHT - Constants.Limelight.LIMELIGHT_HEIGHT);
     }
-
 
     return heightDifference/(Math.tan((Constants.Limelight.LIMELIGHT_ANGLE_DEGREES + getVerticalAngle()) * Math.PI/180.0));
   }

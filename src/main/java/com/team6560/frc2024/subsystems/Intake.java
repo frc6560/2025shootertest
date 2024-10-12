@@ -19,11 +19,13 @@ public class Intake extends SubsystemBase {
     final CANSparkMax transferMotor;
     final DigitalInput distanceSensor;
 
+    private static final int DISTANCE_SENSOR_PORT = 7;
+
     private static final double FEED_RATE = 0.6;
     private static final double REVERSE_RATE = -0.3;
 
     public Intake() { 
-        this.distanceSensor = new DigitalInput(7);
+        this.distanceSensor = new DigitalInput(DISTANCE_SENSOR_PORT);
         this.intakeMotor = new TalonFX(Constants.CanIDs.INTAKE_FEED_MOTOR_ID);
         this.intakeMotor.getConfigurator().apply((new TalonFXConfiguration()).withOpenLoopRamps(new OpenLoopRampsConfigs().withVoltageOpenLoopRampPeriod(0.5)));
         this.transferMotor = new CANSparkMax(Constants.CanIDs.INTAKE_TRANSFER_MOTOR_ID, MotorType.kBrushless);

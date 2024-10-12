@@ -149,4 +149,16 @@ public class ManualControls {
         return shooterController.getAButton();
     }
 
+    
+
+    // testing horizontal turret
+
+    // public boolean getTurretLeft() {
+    //     return shooterController.getYButton();
+    // }
+    // 
+    // public boolean getTurretRight() {
+    //     return shooterController.getXButton();
+    // }
+
 }
