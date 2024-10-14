@@ -14,7 +14,9 @@ import com.team6560.frc2024.commands.TransferCommand;
 import com.team6560.frc2024.commands.ShooterCommand;
 import com.team6560.frc2024.commands.HoodCommand;
 import com.team6560.frc2024.commands.TurretCommand;
-
+// autos
+import com.team6560.frc2024.commands.autos.AutoDrive;
+import com.team6560.frc2024.commands.autos.AutoShoot;
 // subsystems
 import com.team6560.frc2024.subsystems.Drivetrain;
 import com.team6560.frc2024.subsystems.Intake;
@@ -37,7 +39,7 @@ public class RobotContainer {
   // Subsystems
   private final Drivetrain drivetrain;
   private final Intake intake;
-  private final Transfer feeder;
+  private final Transfer transfer;
   private final Shooter shooter;
   private final Turret turret;
   private final Hood hood;
@@ -45,7 +47,7 @@ public class RobotContainer {
   // Commands
   private final DriveCommand driveCommand;
   private final IntakeCommand intakeCommand;
-  private final TransferCommand feederCommand;
+  private final TransferCommand transferCommand;
   private final ShooterCommand shooterCommand;
   private final TurretCommand turretHorizontal;
   private final HoodCommand hoodCommand;
@@ -55,7 +57,6 @@ public class RobotContainer {
   private final SendableChooser<Command> autoChooser;
 
   public RobotContainer() {
-      
       drivetrain = new Drivetrain();
       driveCommand = new DriveCommand(drivetrain, manualControls);
       drivetrain.setDefaultCommand(driveCommand);
@@ -64,9 +65,9 @@ public class RobotContainer {
       intakeCommand = new IntakeCommand(intake, manualControls);
       intake.setDefaultCommand(intakeCommand);
 
-      feeder = new Transfer();
-      feederCommand = new TransferCommand(feeder, manualControls);
-      feeder.setDefaultCommand(feederCommand);
+      transfer = new Transfer();
+      transferCommand = new TransferCommand(transfer, manualControls);
+      transfer.setDefaultCommand(transferCommand);
 
       shooter = new Shooter();
       shooterCommand = new ShooterCommand(shooter, manualControls);
@@ -81,12 +82,22 @@ public class RobotContainer {
       hood.setDefaultCommand(hoodCommand);
 
       autoChooser = new SendableChooser<Command>();
+      autoChooser.addOption("Straight Line", straightLine());
+      autoChooser.addOption("One Shot", oneShot());
+      autoChooser.addOption("No Auto", null);
       SmartDashboard.putData("Auto Mode", autoChooser);
       SmartDashboard.putNumber("Auto Delay", 0);
   }
 
-  // null to not kill anyone
+  public Command straightLine() {
+    return new AutoDrive(drivetrain);
+  }
+
+  public Command oneShot() {
+    return new AutoShoot(hood, shooter, transfer, turret);
+  }
+
   public Command getAutonomousCommand() {
-    return null;
+    return autoChooser.getSelected();
   }
 }

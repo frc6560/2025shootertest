@@ -3,18 +3,12 @@ package com.team6560.frc2024.commands;
 import com.team6560.frc2024.controls.ManualControls;
 import com.team6560.frc2024.subsystems.Hood;
 
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class HoodCommand extends Command {
 
   final Hood hood;
   final ManualControls controls;
-
-  private final NetworkTable limelightNetworkTable = NetworkTableInstance.getDefault().getTable("limelight");
-  private final NetworkTableEntry limelightDistance = limelightNetworkTable.getEntry("distance");
 
   public HoodCommand(Hood hood, ManualControls controls) {
     this.hood = hood;
@@ -27,12 +21,24 @@ public class HoodCommand extends Command {
 
   @Override
   public void execute() {
-    if (controls.getFancyHood()) {
-      hood.setTrigAngle();
-    } else if (controls.getUseLimelight() && limelightDistance.getDouble(-1) != -1) {
-      hood.setDefaultAngle(); // limelightDistance.getDouble(0.0)
+    
+    boolean rumble = false;
+    if (controls.getShootPosition()) {
+      if (hood.setShootAngle()) {
+        rumble = true;
+      }
+    } else if (controls.getPassPosition()) {
+      if (hood.setPassAngle()) {
+        rumble = true;
+      }
     } else {
-      hood.setDefaultAngle();
+      hood.drop();
+    }
+
+    if (rumble) {
+      controls.setShooterControllerRumble(.5);
+    } else {
+      controls.setShooterControllerRumble(0);
     }
   }
 

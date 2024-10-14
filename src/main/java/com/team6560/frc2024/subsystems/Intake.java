@@ -21,8 +21,11 @@ public class Intake extends SubsystemBase {
 
     private static final int DISTANCE_SENSOR_PORT = 7;
 
-    private static final double FEED_RATE = 0.6;
-    private static final double REVERSE_RATE = -0.3;
+    private static final double INTAKE_FEED_RATE = -0.6;
+    private static final double INTAKE_REVERSE_RATE = 0.3;
+
+    private static final double TRANSFER_FEED_RATE = -1.0;
+    private static final double TRANSFER_REVERSE_RATE = 0.5;
 
     public Intake() { 
         this.distanceSensor = new DigitalInput(DISTANCE_SENSOR_PORT);
@@ -39,21 +42,19 @@ public class Intake extends SubsystemBase {
             .add("Distance sensor", this::gamePieceIn);
     }   
     
-    private void setFeedRate(double speed) {
-        intakeMotor.set(-speed);
-        transferMotor.set(-speed);
-    }
-
     public void intake() {
-        this.setFeedRate(FEED_RATE);
+        intakeMotor.set(INTAKE_FEED_RATE);
+        transferMotor.set(TRANSFER_FEED_RATE);
     }
 
     public void outtake() {
-        this.setFeedRate(REVERSE_RATE);
+        intakeMotor.set(INTAKE_REVERSE_RATE);
+        transferMotor.set(TRANSFER_REVERSE_RATE);
     }
 
     public void stop() {
-        this.setFeedRate(0.0);
+        intakeMotor.set(0.0);
+        transferMotor.set(0.0);
     }
 
     private double getIntakeFeedRate() {

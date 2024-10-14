@@ -1,5 +1,6 @@
 package com.team6560.frc2024.controls;
 
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.XboxController;
 
 import com.team6560.frc2024.Constants;
@@ -81,12 +82,12 @@ public class ManualControls {
 
     /* Get processed X-Axis driverController left stick input. */
     public double driveX() {
-        return modifyAxis(driverController.getLeftY() * speed.get());
+        return -modifyAxis(driverController.getLeftY() * speed.get());
     }
 
     /* Get processed Y-Axis driverController left stick input. */
     public double driveY() {
-        return modifyAxis(driverController.getLeftX() * speed.get());
+        return -modifyAxis(driverController.getLeftX() * speed.get());
     }
 
     /* Get processed X-Axis driverController right stick input. */
@@ -138,27 +139,23 @@ public class ManualControls {
         return shooterController.getLeftBumper();
     }
 
-    public boolean getFancyHood() {
-        return shooterController.getStartButton();
-    }
-
-    // LIMELIGHT
-
-    /* Activate limelight tracking */
-    public boolean getUseLimelight() {
+    /* Shoot position  */
+    public boolean getShootPosition() {
         return shooterController.getAButton();
     }
 
-    
+    /* Pass position */
+    public boolean getPassPosition() {
+        return shooterController.getBButton();
+    }
 
-    // testing horizontal turret
+    // RUMBLE
 
-    // public boolean getTurretLeft() {
-    //     return shooterController.getYButton();
-    // }
-    // 
-    // public boolean getTurretRight() {
-    //     return shooterController.getXButton();
-    // }
+    public void setShooterControllerRumble(double output){
+        shooterController.setRumble(RumbleType.kBothRumble, output);
+    }
 
+    public void setDriverControllerRumble(double output){
+        driverController.setRumble(RumbleType.kBothRumble, output);
+    }
 }

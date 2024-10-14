@@ -7,10 +7,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class IntakeCommand extends Command {
     final Intake intake;
     final ManualControls controls;
+    private float rumbleDuration;
 
     public IntakeCommand(Intake intake, ManualControls controls) {
         this.intake = intake;
         this.controls = controls;
+        this.rumbleDuration = 0;
         addRequirements(intake);
     }
 
@@ -21,6 +23,12 @@ public class IntakeCommand extends Command {
 
     @Override
     public void execute() {
+        if (intake.gamePieceIn()) {
+            controls.setDriverControllerRumble(0.3);
+        } else {
+            controls.setDriverControllerRumble(0);
+        }
+
         if (controls.getReverseIntake() && !intake.gamePieceIn()) {
             intake.outtake();
         } else if (controls.getRunIntake() && !intake.gamePieceIn()) {

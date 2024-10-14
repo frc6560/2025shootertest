@@ -1,2 +1,9 @@
 limelight:
 http://10.99.90.201:5801/
+
+auto
+create instant command 
+first 2 secs 
+cal drive command
+controller implementing other controller
+x for 1st 

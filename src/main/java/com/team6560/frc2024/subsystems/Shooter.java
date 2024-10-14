@@ -15,7 +15,7 @@ public class Shooter extends SubsystemBase {
     final TalonFX motor2;
     final TalonFX motor3;
 
-    private static final double SHOOTER_FEED_RATE = 0.9;
+    private static final double SHOOTER_FEED_RATE = 0.35;
     public static final TalonFXPIDConfigProfile SHOOTER_PID_PROFILE = new TalonFXPIDConfigProfile(
       1.2, 0.1, 0.01
     );

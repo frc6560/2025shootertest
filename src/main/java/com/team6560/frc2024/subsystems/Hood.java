@@ -21,8 +21,8 @@ public class Hood extends SubsystemBase {
     
     private double encoderInitialValue;
 
-    private static final double UP_RATE = 0.1;
-    private static final double DOWN_RATE = -0.1;
+    private static final double UP_RATE = 0.2;
+    private static final double DOWN_RATE = -0.2;
 
     private static final double GEAR_RATIO = 25 * 360 / 40;
 
@@ -39,7 +39,8 @@ public class Hood extends SubsystemBase {
       .5, 0, 0
     );
 
-    private static final double DEFAULT_ANGLE = 51.7;
+    public static final double SHOOT_ANGLE = 51.7;
+    public static final double PASS_ANGLE = 25.0;
     private static final double ANGLE_THRESHOLD = 1.5;
 
     public Hood() { 
@@ -71,14 +72,18 @@ public class Hood extends SubsystemBase {
         return ((motor.getPosition().getValueAsDouble() * 360) - (this.encoderInitialValue * 360)) / GEAR_RATIO + LOWER_HARD_LIMIT;
     }
 
-    public void setAngle(double targetAngle) {
+    // returns True if angle is close enough to initiate shooting
+    public boolean setAngle(double targetAngle) {
         double currentAngle = this.getAngle();
         
         if (currentAngle < LOWER_SOFT_LIMIT) {
             this.setFeedRate(UP_RATE);
+            return false;
         } else if (currentAngle > UPPER_SOFT_LIMIT) {
             this.setFeedRate(DOWN_RATE);
+            return false;
         } else {
+
             double angleDifference = targetAngle - currentAngle;
     
             if (Math.abs(angleDifference) < ANGLE_THRESHOLD) {
@@ -88,23 +93,32 @@ public class Hood extends SubsystemBase {
                 } else {
                     this.setFeedRate(DOWN_RATE * slowDownFactor);
                 }
+                return true;
             } else if (currentAngle < targetAngle - ANGLE_THRESHOLD) {
                 this.setFeedRate(UP_RATE);
+                return false;
             } else if (currentAngle > targetAngle + ANGLE_THRESHOLD) {
                 this.setFeedRate(DOWN_RATE);
+                return false;
             }
+            return false;
         }
     }
 
-    public void setTrigAngle() {
-        double timeInSeconds = Instant.now().getEpochSecond() % 60; 
-        double targetAngle = LOWER_HARD_LIMIT + (UPPER_HARD_LIMIT - LOWER_HARD_LIMIT) / 2 
-                             + (UPPER_HARD_LIMIT - LOWER_HARD_LIMIT) / 2 * Math.sin(Math.toRadians(timeInSeconds * 6));
-        this.setAngle(targetAngle);
+    public boolean setShootAngle() {
+        return this.setAngle(SHOOT_ANGLE);
     }
 
-    public void setDefaultAngle() {
-        this.setAngle(DEFAULT_ANGLE);
+    public boolean setPassAngle() {
+        return this.setAngle(PASS_ANGLE);
+    }
+
+    public void drop() {
+        if (this.getAngle() > LOWER_SOFT_LIMIT) {
+            this.setFeedRate(DOWN_RATE);
+        } else {
+            this.setFeedRate(0.0);
+        }
     }
 
     private boolean topLimitDown() {

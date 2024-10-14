@@ -22,6 +22,7 @@ public class Limelight extends SubsystemBase {
   private final NetworkTableEntry ntL = networkTable.getEntry("tl");
   private final NetworkTableEntry ntcL = networkTable.getEntry("cl");
   private final NetworkTableEntry ntID = networkTable.getEntry("tid");
+  private final NetworkTableEntry ntPipeline = networkTable.getEntry("pipeline"); 
 
   // gets programmatically displayed limelight values and converts to better format
   public Limelight() {
@@ -29,6 +30,10 @@ public class Limelight extends SubsystemBase {
     .add("Horizontal Angle", this::getHorizontalAngle)
     .add("Vertical Angle", this::getVerticalAngle)
     .add("Has Target", this::hasTarget);
+  }
+
+  public void setPipeline(int pipeline){
+    ntPipeline.setDouble(pipeline);
   }
 
   public double getHorizontalAngle() {

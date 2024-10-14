@@ -46,8 +46,6 @@ public class Turret extends SubsystemBase {
         this.limitSwitch = new DigitalInput(LIMIT_SWITCH_PORT);
         this.encoderInitialValue = this.motor.getEncoder().getPosition();
 
-        this.setTurretAngle(-DEFAULT_ANGLE);
-
         ntDispTab("Turret Horizontal")
             .add("Turret Rotation Feed Rate", this::getFeedRate)
             .add("Turret Angle", this::getTurretAngle)
