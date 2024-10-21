@@ -15,10 +15,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Hood extends SubsystemBase {
 
-    final TalonFX motor;
+    final TalonFX AmpMotor;
     final DigitalInput topLimitSwitch;
     final DigitalInput bottomLimitSwitch;
-    
+    final CANSparkMax motor;
+    final DigitalInput distanceSensor;
+
+    private static final int DISTANCE_SENSOR_PORT = 7;
+
     private double encoderInitialValue;
 
     private static final double UP_RATE = 0.2;
@@ -41,7 +45,11 @@ public class Hood extends SubsystemBase {
 
     public static final double SHOOT_ANGLE = 51.7;
     public static final double PASS_ANGLE = 25.0;
+    //not actual amp angle
+    public static final double AMP_ANGLE = 40.0;
     private static final double ANGLE_THRESHOLD = 1.5;
+    
+    double currentAngle = this.getAngle();
 
     public Hood() { 
         this.motor = new TalonFX(Constants.CanIDs.HOOD_MOTOR_ID); 
@@ -59,6 +67,32 @@ public class Hood extends SubsystemBase {
             .add("Upper soft limit", this::getUpperBound)
             .add("Lower soft limit", this::getLowerBound);
     }   
+
+    public Amp() { 
+        this.distanceSensor = new DigitalInput(DISTANCE_SENSOR_PORT);
+        this.Amp = new CANSparkMax(Constants.CanIDs.AMP_MOTOR_ID, MotorType.kBrushless);
+        this.Amp.restoreFactoryDefaults();
+        this.Amp.setIdleMode(IdleMode.kBrake);
+        this.Amp.setSmartCurrentLimit(25);
+        this.Amp.setOpenLoopRampRate(0.1);
+        ntDispTab("Amp Ready").add("Amp Ready: ", this::getAmpReady);
+    }  
+    
+    public void ampStop() {
+        setAngle(currentAngle);
+    }
+
+    public void ampRun() {
+        AmpMotor.setFeedRate(Constants.ShooterAmpHood.AMP_FEED_RATE);
+    }
+
+    public boolean gamePieceIn() {
+        return !this.distanceSensor.get();
+    }
+
+    public boolean getAmpReady() {
+        return (gamePieceIn() && (getFeedRate() == 0));
+    }
 
     private void setFeedRate(double speed) {
         motor.set(speed);
@@ -105,12 +139,16 @@ public class Hood extends SubsystemBase {
         }
     }
 
-    public boolean setShootAngle() {
+    public double setShootAngle() {
         return this.setAngle(SHOOT_ANGLE);
     }
 
-    public boolean setPassAngle() {
+    public double setPassAngle() {
         return this.setAngle(PASS_ANGLE);
+    }
+
+    public double setAmpAngle() {
+        return this.setAngle(AMP_ANGLE);
     }
 
     public void drop() {

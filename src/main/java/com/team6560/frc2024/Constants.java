@@ -68,8 +68,15 @@ public final class Constants {
 
     public static final int TRANSFER_MOTOR_ID = 23;
 
+    public static final int AMP_MOTOR_ID = 24;
+
   }
 
+  public static class ShooterAmpHood {
+
+    public static final double AMP_FEED_RATE = 0.05;
+
+  }
   /* Constants for drivetrain dimensions, offsets, speeds etc. */
   public static class Drivetrain {
 
