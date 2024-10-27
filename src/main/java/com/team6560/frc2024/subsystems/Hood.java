@@ -1,6 +1,9 @@
 package com.team6560.frc2024.subsystems;
 
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.revrobotics.CANSparkBase.IdleMode;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkMax;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.team6560.frc2024.Constants;
 import com.team6560.frc2024.utility.PID.PIDConfigFuncs;
@@ -15,10 +18,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Hood extends SubsystemBase {
 
-    final TalonFX AmpMotor;
+    final TalonFX motor;
     final DigitalInput topLimitSwitch;
     final DigitalInput bottomLimitSwitch;
-    final CANSparkMax motor;
+    final CANSparkMax AmpMotor;
     final DigitalInput distanceSensor;
 
     private static final int DISTANCE_SENSOR_PORT = 7;
@@ -45,8 +48,9 @@ public class Hood extends SubsystemBase {
 
     public static final double SHOOT_ANGLE = 51.7;
     public static final double PASS_ANGLE = 25.0;
-    //not actual amp angle
     public static final double AMP_ANGLE = 40.0;
+    //not actual amp angle
+    public static final double MOTORTALONFX_ANGLE = 40.0;
     private static final double ANGLE_THRESHOLD = 1.5;
     
     double currentAngle = this.getAngle();
@@ -58,6 +62,14 @@ public class Hood extends SubsystemBase {
         this.topLimitSwitch = new DigitalInput(UPPER_LIMIT_SWITCH_ID);
         this.bottomLimitSwitch = new DigitalInput(LOWER_LIMIT_SWITCH_ID);
         this.encoderInitialValue = this.motor.getPosition().getValueAsDouble(); // initial encoder pos in terms of rotations
+        this.distanceSensor = new DigitalInput(DISTANCE_SENSOR_PORT);
+        this.AmpMotor = new CANSparkMax(Constants.CanIDs.AMP_MOTOR_ID, MotorType.kBrushless);
+        this.AmpMotor.restoreFactoryDefaults();
+        this.AmpMotor.setIdleMode(IdleMode.kBrake);
+        this.AmpMotor.setSmartCurrentLimit(25);
+        this.AmpMotor.setOpenLoopRampRate(0.1);
+
+        ntDispTab("Amp Ready").add("Amp Ready: ", this::getAmpReady);
 
         ntDispTab("Hood ")
             .add("Hood Feed Rate", this::getFeedRate)
@@ -67,31 +79,26 @@ public class Hood extends SubsystemBase {
             .add("Upper soft limit", this::getUpperBound)
             .add("Lower soft limit", this::getLowerBound);
     }   
-
-    public Amp() { 
-        this.distanceSensor = new DigitalInput(DISTANCE_SENSOR_PORT);
-        this.Amp = new CANSparkMax(Constants.CanIDs.AMP_MOTOR_ID, MotorType.kBrushless);
-        this.Amp.restoreFactoryDefaults();
-        this.Amp.setIdleMode(IdleMode.kBrake);
-        this.Amp.setSmartCurrentLimit(25);
-        this.Amp.setOpenLoopRampRate(0.1);
-        ntDispTab("Amp Ready").add("Amp Ready: ", this::getAmpReady);
-    }  
     
     public void ampStop() {
         setAngle(currentAngle);
     }
 
     public void ampRun() {
-        AmpMotor.setFeedRate(Constants.ShooterAmpHood.AMP_FEED_RATE);
+        setAmpRate(Constants.ShooterAmpHood.AMP_FEED_RATE);
     }
 
     public boolean gamePieceIn() {
         return !this.distanceSensor.get();
     }
 
+    
     public boolean getAmpReady() {
         return (gamePieceIn() && (getFeedRate() == 0));
+    }
+
+    public void setAmpRate(double speed) {
+        AmpMotor.set(speed);
     }
 
     private void setFeedRate(double speed) {
@@ -139,15 +146,15 @@ public class Hood extends SubsystemBase {
         }
     }
 
-    public double setShootAngle() {
+    public boolean setShootAngle() {
         return this.setAngle(SHOOT_ANGLE);
     }
 
-    public double setPassAngle() {
+    public boolean setPassAngle() {
         return this.setAngle(PASS_ANGLE);
     }
 
-    public double setAmpAngle() {
+    public boolean setAmpAngle() {
         return this.setAngle(AMP_ANGLE);
     }
 

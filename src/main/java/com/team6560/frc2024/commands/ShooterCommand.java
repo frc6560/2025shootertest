@@ -10,28 +10,24 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 public class ShooterCommand extends Command {
   final Shooter shooter;
-  final Turret turret;
   final ManualControls controls;
-  final Amp amp;
   final Hood hood;
 
   double HorizontalTargetPosition = 0.0;
   double VerticalTargetPosition = 40.0;
 
-  public ShooterCommand(Shooter shooter, Amp amp, ManualControls controls) {
+  public ShooterCommand(Shooter shooter, Hood hood, ManualControls controls) {
     this.shooter = shooter;
     this.controls = controls;
-    this.amp = amp;
     this.hood = hood;
     addRequirements(shooter);
-    addRequirements(amp);
     addRequirements(hood);
   }
 
   @Override
   public void initialize() {
     shooter.stop();
-    amp.ampStop();
+    hood.ampStop();
   }
 
   @Override
@@ -39,24 +35,22 @@ public class ShooterCommand extends Command {
     if (controls.getRunShooter()) {
       shooter.run();
     } 
-    else if (controls.getAmp() && getAmpReady()) {
+    else if (controls.getAmp() && hood.getAmpReady()) {
       while (controls.getAmp()) {
-        hood.setAmpAngle();
-        turret.setTurretAngle(0.0);
         shooter.shooteramprun();
-        amp.ampRun();
+        hood.ampRun();
       }
     }
     else {
       shooter.stop();
-      amp.ampStop();
+      hood.ampStop();
     }
   }
 
   @Override
   public void end(boolean interrupted) {
     shooter.stop();
-    amp.ampStop();
+    hood.ampStop();
   }
 
   @Override

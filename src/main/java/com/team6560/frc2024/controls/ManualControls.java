@@ -149,6 +149,14 @@ public class ManualControls {
         return shooterController.getBButton();
     }
 
+    public boolean getAmp() {
+        return (driverController.getRightBumper());
+    }
+
+    public boolean setAmp() {
+        return (driverController.getAButton());
+    }
+
     // RUMBLE
 
     public void setShooterControllerRumble(double output){
