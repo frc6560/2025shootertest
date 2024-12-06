@@ -7,19 +7,17 @@ import com.team6560.lib.subsystems.roller.BasicRollerSubsystem;
 
 import com.team6560.frc2024.Constants;
 
-public class Transfer extends BasicRollerSubsystem {
+public class Amp extends BasicRollerSubsystem {
     
-    private static final double FEED_RATE = 1.0;
-    private static final double REVERSE_RATE = -1.0;
-    private static final int CURRENT_LIMIT = 25;
+    private static final double FEED_RATE = 0.6;
+    private static final double REVERSE_RATE = -0.6;
     private static final double OPEN_LOOP_RAMP_TIME = 0.1;
 
-    public Transfer() {
-        super("Transfer");
+    public Amp() {
+        super("Amp");
         withMotor(
             new RollerSubsystemMotor(
-                new SparkMaxMotor(Constants.CanIDs.TRANSFER_MOTOR_ID)
-                .withCurrentLimit(CURRENT_LIMIT)
+                new SparkMaxMotor(Constants.CanIDs.AMP_MOTOR_ID)
                 .withOpenLoopRampConfig(OPEN_LOOP_RAMP_TIME)
                 .withBrakeMode(),
                 FEED_RATE,

@@ -2,39 +2,12 @@ package com.team6560.frc2024.commands;
 
 import com.team6560.frc2024.controls.ManualControls;
 import com.team6560.frc2024.subsystems.Shooter;
-import edu.wpi.first.wpilibj2.command.Command;
+import com.team6560.lib.commands.GenericRollerCommand;
 
-public class ShooterCommand extends Command {
-  final Shooter shooter;
-  final ManualControls controls;
+public class ShooterCommand extends GenericRollerCommand{
 
-  public ShooterCommand(Shooter shooter, ManualControls controls) {
-    this.shooter = shooter;
-    this.controls = controls;
-    addRequirements(shooter);
-  }
-
-  @Override
-  public void initialize() {
-    shooter.stop();
-  }
-
-  @Override
-  public void execute() {
-    if (controls.getRunShooter()) {
-      shooter.run();
-    } else {
-      shooter.stop();
+    public ShooterCommand(Shooter shooter, ManualControls controls) {
+        super(shooter, (Void) -> controls.getRunShooter());
     }
-  }
 
-  @Override
-  public void end(boolean interrupted) {
-    shooter.stop();
-  }
-
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
 }

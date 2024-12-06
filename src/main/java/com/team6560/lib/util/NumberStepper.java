@@ -1,4 +1,4 @@
-package com.team6560.frc2024.utility;
+package com.team6560.lib.util;
 
 /**
  * The `NumberStepper` class provides utility methods for stepping up or down a

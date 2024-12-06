@@ -4,29 +4,28 @@
 
 package com.team6560.frc2024;
 
-// constants
-// import com.team6560.frc2024.Constants;
+import com.team6560.lib.controls.DriveControlsConfig;
 
-// commands
-import com.team6560.frc2024.commands.DriveCommand;
-import com.team6560.frc2024.commands.IntakeCommand;
-import com.team6560.frc2024.commands.TransferCommand;
-import com.team6560.frc2024.commands.ShooterCommand;
-import com.team6560.frc2024.commands.HoodCommand;
-import com.team6560.frc2024.commands.TurretCommand;
-// autos
-import com.team6560.frc2024.commands.autos.AutoDrive;
-import com.team6560.frc2024.commands.autos.AutoShoot;
-// subsystems
-import com.team6560.frc2024.subsystems.Drivetrain;
-import com.team6560.frc2024.subsystems.Intake;
-import com.team6560.frc2024.subsystems.Transfer;
-import com.team6560.frc2024.subsystems.Shooter;
-import com.team6560.frc2024.subsystems.Hood;
-import com.team6560.frc2024.subsystems.Turret;
-
-// controls 
 import com.team6560.frc2024.controls.ManualControls;
+
+import com.team6560.frc2024.subsystems.Drivetrain;
+import com.team6560.frc2024.commands.DriveCommand;
+
+import com.team6560.frc2024.subsystems.Intake;
+import com.team6560.frc2024.commands.IntakeCommand;
+
+import com.team6560.frc2024.subsystems.Shooter;
+import com.team6560.frc2024.commands.ShooterCommand;
+
+import com.team6560.frc2024.subsystems.Transfer;
+import com.team6560.frc2024.commands.TransferCommand;
+
+import com.team6560.frc2024.subsystems.Amp;
+import com.team6560.frc2024.commands.AmpCommand;
+
+import com.team6560.frc2024.subsystems.TestDigitalInputSensor;
+import com.team6560.frc2024.subsystems.TestSparkMaxMotor;
+import com.team6560.frc2024.subsystems.TestTalonFXMotor;
 
 // wpilib imports
 import edu.wpi.first.wpilibj.XboxController;
@@ -35,69 +34,87 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class RobotContainer {
-  
-  // Subsystems
-  private final Drivetrain drivetrain;
-  private final Intake intake;
-  private final Transfer transfer;
-  private final Shooter shooter;
-  private final Turret turret;
-  private final Hood hood;
 
-  // Commands
-  private final DriveCommand driveCommand;
-  private final IntakeCommand intakeCommand;
-  private final TransferCommand transferCommand;
-  private final ShooterCommand shooterCommand;
-  private final TurretCommand turretHorizontal;
-  private final HoodCommand hoodCommand;
+  private Drivetrain drivetrain;
+  private DriveCommand driveCommand;
 
-  private final ManualControls manualControls = new ManualControls(new XboxController(0), new XboxController(1));
+  /* 
+  private Intake intake;
+  private IntakeCommand intakeCommand;
+
+  private Shooter shooter;
+  private ShooterCommand shooterCommand;
+
+  private Transfer transfer;
+  private TransferCommand transferCommand;
+
+  private Amp amp;
+  private AmpCommand ampCommand;
+  */
+
+  // private TestDigitalInputSensor testDigitalInputSensor;
+  // private TestSparkMaxMotor testSparkMaxMotor;
+  // private TestTalonFXMotor testTalonFXMotor;
 
   private final SendableChooser<Command> autoChooser;
 
+  private final ManualControls manualControls = new ManualControls(
+    new XboxController(0), 
+    new XboxController(1), 
+    new DriveControlsConfig.Builder()
+    .setMaxVelocity(Constants.Drivetrain.MAX_VELOCITY_METERS_PER_SECOND)
+    .setMaxANgularVelocity(Constants.Drivetrain.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND)
+    .setSpeedInitialPercent(0.5) 
+    .setSpeedMinPercent(0.1)
+    .setSpeedMaxPercent(0.9)
+    .setSpeedStepPercent(0.05) 
+    .setTurnSpeedInitialPercent(0.2)
+    .setTurnSpeedMinPercent(0.1) 
+    .setTurnSpeedMaxPercent(0.8) 
+    .setTurnSpeedStepPercent(0.025) 
+    .setDeadband(0.1) 
+    .setReverseX(false) 
+    .setReverseY(false) 
+    .build()
+  );
+
   public RobotContainer() {
+
       drivetrain = new Drivetrain();
       driveCommand = new DriveCommand(drivetrain, manualControls);
       drivetrain.setDefaultCommand(driveCommand);
+
+      /* 
 
       intake = new Intake();
       intakeCommand = new IntakeCommand(intake, manualControls);
       intake.setDefaultCommand(intakeCommand);
 
-      transfer = new Transfer();
-      transferCommand = new TransferCommand(transfer, manualControls);
-      transfer.setDefaultCommand(transferCommand);
-
       shooter = new Shooter();
       shooterCommand = new ShooterCommand(shooter, manualControls);
       shooter.setDefaultCommand(shooterCommand);
 
-      turret = new Turret();
-      turretHorizontal = new TurretCommand(turret, manualControls);
-      turret.setDefaultCommand(turretHorizontal);
+      transfer = new Transfer();
+      transferCommand = new TransferCommand(transfer, manualControls);
+      transfer.setDefaultCommand(transferCommand);
 
-      hood = new Hood();
-      hoodCommand = new HoodCommand(hood, manualControls);
-      hood.setDefaultCommand(hoodCommand);
+      amp = new Amp();
+      ampCommand = new AmpCommand(amp, manualControls);
+      amp.setDefaultCommand(ampCommand);
+
+      */
+
+      // testDigitalInputSensor = new TestDigitalInputSensor();
+      // testTalonFXMotor = new TestTalonFXMotor();
+      // testSparkMaxMotor = new TestSparkMaxMotor();
 
       autoChooser = new SendableChooser<Command>();
-      autoChooser.addOption("Straight Line", straightLine());
-      autoChooser.addOption("One Shot", oneShot());
       autoChooser.addOption("No Auto", null);
       SmartDashboard.putData("Auto Mode", autoChooser);
       SmartDashboard.putNumber("Auto Delay", 0);
   }
 
-  public Command straightLine() {
-    return new AutoDrive(drivetrain);
-  }
-
-  public Command oneShot() {
-    return new AutoShoot(hood, shooter, transfer, turret);
-  }
-
   public Command getAutonomousCommand() {
-    return autoChooser.getSelected();
+    return null;
   }
 }

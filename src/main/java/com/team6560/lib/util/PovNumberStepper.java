@@ -1,4 +1,4 @@
-package com.team6560.frc2024.utility;
+package com.team6560.lib.util;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -67,12 +67,13 @@ public class PovNumberStepper {
         this.direction = direction;
 
         CommandScheduler.getInstance().registerSubsystem(
-                new Subsystem() {
-                    @Override
-                    public void periodic() {
-                        update();
-                    }
-                });
+            new Subsystem() {
+                @Override
+                public void periodic() {
+                    update();
+                }
+            }
+        );
     }
 
     /**

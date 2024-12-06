@@ -1,71 +1,63 @@
 package com.team6560.frc2024.subsystems;
 
-import com.ctre.phoenix6.configs.OpenLoopRampsConfigs;
-import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.hardware.TalonFX;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkBase.IdleMode;
-import com.revrobotics.CANSparkLowLevel.MotorType;
-import edu.wpi.first.wpilibj.DigitalInput;
-
+import com.team6560.lib.hardware.motors.RollerSubsystemMotor;
+import com.team6560.lib.hardware.motors.TalonFXMotor;
+import com.team6560.lib.hardware.motors.SparkMaxMotor;
+import com.team6560.lib.hardware.motors.RollerSubsystemMotor.MotorMode;
+import com.team6560.lib.hardware.sensors.DigitalInputSensor;
+import com.team6560.lib.subsystems.roller.BasicRollerSubsystem;
 import com.team6560.frc2024.Constants;
-import static com.team6560.frc2024.utility.NetworkTable.NtValueDisplay.ntDispTab;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-public class Intake extends SubsystemBase {
-    
-    final TalonFX intakeMotor;
-    final CANSparkMax transferMotor;
-    final DigitalInput distanceSensor;
+public class Intake extends BasicRollerSubsystem {
 
     private static final int DISTANCE_SENSOR_PORT = 7;
 
-    private static final double INTAKE_FEED_RATE = -0.6;
-    private static final double INTAKE_REVERSE_RATE = 0.3;
+    private static final double INTAKE_FEED_RATE = 0.6;
+    private static final double INTAKE_REVERSE_RATE = -0.3;
 
-    private static final double TRANSFER_FEED_RATE = -1.0;
-    private static final double TRANSFER_REVERSE_RATE = 0.5;
+    private static final double TRANSFER_FEED_RATE = 1.0;
+    private static final double TRANSFER_REVERSE_RATE = -0.5;
 
-    public Intake() { 
-        this.distanceSensor = new DigitalInput(DISTANCE_SENSOR_PORT);
-        this.intakeMotor = new TalonFX(Constants.CanIDs.INTAKE_FEED_MOTOR_ID);
-        this.intakeMotor.getConfigurator().apply((new TalonFXConfiguration()).withOpenLoopRamps(new OpenLoopRampsConfigs().withVoltageOpenLoopRampPeriod(0.5)));
-        this.transferMotor = new CANSparkMax(Constants.CanIDs.INTAKE_TRANSFER_MOTOR_ID, MotorType.kBrushless);
-        this.transferMotor.restoreFactoryDefaults();
-        this.transferMotor.setIdleMode(IdleMode.kBrake);
-        this.transferMotor.setSmartCurrentLimit(25);
-        this.transferMotor.setOpenLoopRampRate(0.5);
-        ntDispTab("Intake")
-            .add("Transfer Feed Rate", this::getTransferFeedRate)
-            .add("Intake Feed Rate", this::getIntakeFeedRate)
-            .add("Distance sensor", this::gamePieceIn);
-    }   
-    
-    public void intake() {
-        intakeMotor.set(INTAKE_FEED_RATE);
-        transferMotor.set(TRANSFER_FEED_RATE);
-    }
+    private static final int TRANSFER_CURRENT_LIMIT = 25;
 
-    public void outtake() {
-        intakeMotor.set(INTAKE_REVERSE_RATE);
-        transferMotor.set(TRANSFER_REVERSE_RATE);
-    }
+    private static final double OPEN_LOOP_RAMP_TIME = .5;
 
-    public void stop() {
-        intakeMotor.set(0.0);
-        transferMotor.set(0.0);
-    }
-
-    private double getIntakeFeedRate() {
-        return intakeMotor.get();
-    }
-
-    private double getTransferFeedRate() {
-        return transferMotor.get();
+    public Intake() {
+        super("Intake");
+        withMotor(
+            new RollerSubsystemMotor(
+                new TalonFXMotor(Constants.CanIDs.INTAKE_FEED_MOTOR_ID)
+                    .withOpenLoopRampConfig(OPEN_LOOP_RAMP_TIME)
+                    .withBrakeMode()
+                    .withReversedMotor(),
+                INTAKE_FEED_RATE,
+                INTAKE_REVERSE_RATE,
+                MotorMode.DUTY_CYCLE
+            )
+        )
+        .withMotor(
+            new RollerSubsystemMotor(
+                new SparkMaxMotor(Constants.CanIDs.INTAKE_TRANSFER_MOTOR_ID)
+                    .withCurrentLimit(TRANSFER_CURRENT_LIMIT)
+                    .withOpenLoopRampConfig(OPEN_LOOP_RAMP_TIME)
+                    .withBrakeMode()
+                    .withReversedMotor(),
+                TRANSFER_FEED_RATE,
+                TRANSFER_REVERSE_RATE,
+                MotorMode.DUTY_CYCLE
+            )
+        )
+        .withDigitalInputSensor(
+            new DigitalInputSensor(DISTANCE_SENSOR_PORT)
+            .withReversedOutput()
+        )
+        .withSensorMode(
+            SensorMode.SENSOR_ON_PREVENTS_FORWARD
+        )
+        .build();
     }
 
     public boolean gamePieceIn() {
-        return !this.distanceSensor.get();
+        return super.getSensorValue();
     }
 }
