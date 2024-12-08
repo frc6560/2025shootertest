@@ -27,6 +27,9 @@ import com.team6560.frc2024.subsystems.TestDigitalInputSensor;
 import com.team6560.frc2024.subsystems.TestSparkMaxMotor;
 import com.team6560.frc2024.subsystems.TestTalonFXMotor;
 
+import com.pathplanner.lib.commands.PathPlannerAuto;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+
 // wpilib imports
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -110,6 +113,7 @@ public class RobotContainer {
 
       autoChooser = new SendableChooser<Command>();
       autoChooser.addOption("No Auto", null);
+      autoChooser.addOption("Calibration", calibration());
       SmartDashboard.putData("Auto Mode", autoChooser);
       SmartDashboard.putNumber("Auto Delay", 0);
   }
@@ -117,4 +121,11 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     return null;
   }
+
+  public Command calibration(){
+    return (new PathPlannerAuto("cali1"))
+    .andThen(new WaitCommand(3))
+    .andThen(new PathPlannerAuto("cali2"));
+  }
+
 }

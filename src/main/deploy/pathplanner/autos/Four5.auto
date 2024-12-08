@@ -1,0 +1,38 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 2.895296810271618,
+      "y": 6.975699103455452
+    },
+    "rotation": -150.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "four5"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Four Ball",
+  "choreoAuto": false
+}

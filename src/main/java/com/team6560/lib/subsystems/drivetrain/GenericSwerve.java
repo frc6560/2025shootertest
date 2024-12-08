@@ -33,6 +33,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import java.util.function.Function;
 
 import com.team6560.lib.util.AllianceUtil;
+import com.team6560.lib.util.NetworkTable.NtValueDisplay;
 
 /**
  * Generic swerve drive class that can be initialized with varying wheelbases, CAN IDs, and motor types.
@@ -140,7 +141,6 @@ public class GenericSwerve extends SubsystemBase {
 
         odometry = new SwerveDriveOdometry(config.getKinematics(), getRawGyroRotation(), getModulePositions());
         fieldOnlyOdometry = new Field2d();
-        SmartDashboard.putData("FieldOnlyOdometry", fieldOnlyOdometry);
 
         Pose2d initialPose = AllianceUtil.IS_RED_ALLIANCE 
             ? defaultPoseRedAlliance
@@ -158,6 +158,10 @@ public class GenericSwerve extends SubsystemBase {
             ()-> AllianceUtil.IS_RED_ALLIANCE,
             this
         );
+
+        SmartDashboard.putData("FieldOnlyOdometry", fieldOnlyOdometry);
+        NtValueDisplay.ntDispTab("Drivetrain")
+        .add("Gyro", () -> getRawGyroRotation().getDegrees());
 
     }
 
@@ -273,7 +277,7 @@ public class GenericSwerve extends SubsystemBase {
      */
     public void driveRobotRelative(ChassisSpeeds robotRelativeSpeeds) {
         ChassisSpeeds targetSpeeds = ChassisSpeeds.discretize(robotRelativeSpeeds, 0.02);
-        SwerveModuleState[] targetStates = this.mKinematics.toSwerveModuleStates(targetSpeeds);
+        SwerveModuleState[] targetStates = mKinematics.toSwerveModuleStates(targetSpeeds);
         setChassisState(targetStates);
     }
 
