@@ -38,7 +38,6 @@ public class Drivetrain extends GenericSwerve {
         .setDefaultPoseBlueAlliance(Constants.Odometry.DEFAULT_POSE_BLUE_ALLIANCE)
         .setDefaultRotationRedAlliance(Constants.Odometry.DEFAULT_ROTATION_RED_ALLIANCE)
         .setDefaultRotationBlueAlliance(Constants.Odometry.DEFAULT_ROTATION_BLUE_ALLIANCE)
-        .setPathFollowerConfig(Constants.Drivetrain.PATH_FOLLOWER_CONFIG)
         .build(),
         Constants.Global.MAX_VOLTAGE
         );

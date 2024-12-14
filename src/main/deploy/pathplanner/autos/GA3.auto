@@ -1,12 +1,5 @@
 {
-  "version": 1.0,
-  "startingPose": {
-    "position": {
-      "x": 2.3104826280826942,
-      "y": 3.96
-    },
-    "rotation": 135.0
-  },
+  "version": "2025.0",
   "command": {
     "type": "sequential",
     "data": {
@@ -33,6 +26,7 @@
       ]
     }
   },
-  "folder": "Green Arrow",
+  "resetOdom": true,
+  "folder": null,
   "choreoAuto": false
 }

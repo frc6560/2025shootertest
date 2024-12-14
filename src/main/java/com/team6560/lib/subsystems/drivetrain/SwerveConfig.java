@@ -7,8 +7,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import com.pathplanner.lib.util.GeometryUtil;
-import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
-import com.pathplanner.lib.util.ReplanningConfig;
 
 /**
  * Config class for encapsulating all swerve drivetrain parameters.
@@ -35,7 +33,6 @@ public class SwerveConfig {
     public final double maxVelocity; // m/s
     public final double maxAngularVelocity; // rad/s
     public final SwerveOffsets offsets;
-    public final HolonomicPathFollowerConfig pathFollowerConfig;
 
     private SwerveDriveKinematics kinematics;
 
@@ -74,7 +71,6 @@ public class SwerveConfig {
         this.defaultRotationBlueAlliance = builder.defaultRotationBlueAlliance;
         this.defaultPoseRedAlliance = builder.defaultPoseRedAlliance;
         this.defaultPoseBlueAlliance = builder.defaultPoseBlueAlliance;
-        this.pathFollowerConfig = builder.pathFollowerConfig;
 
         // Recalculate kinematics whenever the config is built
         this.kinematics = createKinematics();
@@ -143,8 +139,6 @@ public class SwerveConfig {
 
         // Change config if using auto
 
-        private HolonomicPathFollowerConfig pathFollowerConfig = new HolonomicPathFollowerConfig(1.0, 0.8172, new ReplanningConfig(true, false));
-
         public Builder setFLSteerCanID(int id) { this.FLSteerCanID = id; return this; }
         public Builder setFLDriveCanID(int id) { this.FLDriveCanID = id; return this; }
         public Builder setFLEncoderCanID(int id) { this.FLEncoderCanID = id; return this; }
@@ -183,11 +177,6 @@ public class SwerveConfig {
         public Builder setDefaultPoseBlueAlliance(Pose2d pose) {
             this.defaultPoseBlueAlliance = pose;
             return this;
-        }
-
-        public Builder setPathFollowerConfig(HolonomicPathFollowerConfig config) { 
-            this.pathFollowerConfig = config; 
-            return this; 
         }
 
         public SwerveConfig build() {

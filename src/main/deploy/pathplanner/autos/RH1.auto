@@ -1,12 +1,5 @@
 {
-  "version": 1.0,
-  "startingPose": {
-    "position": {
-      "x": 0.7365015087811937,
-      "y": 6.681985456994171
-    },
-    "rotation": -120.0
-  },
+  "version": "2025.0",
   "command": {
     "type": "sequential",
     "data": {
@@ -33,6 +26,7 @@
       ]
     }
   },
-  "folder": "Robin Hood",
+  "resetOdom": true,
+  "folder": null,
   "choreoAuto": false
 }

@@ -8,6 +8,8 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -29,9 +31,14 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkMax;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.config.ModuleConfig;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
 import java.util.function.Function;
 
+import com.team6560.frc2024.Constants;
 import com.team6560.lib.util.AllianceUtil;
 import com.team6560.lib.util.NetworkTable.NtValueDisplay;
 
@@ -148,16 +155,38 @@ public class GenericSwerve extends SubsystemBase {
 
         resetOdometry(initialPose);
 
-        // Configure PathPlanner auto
-        AutoBuilder.configureHolonomic(
-            this::getPose2d, 
-            (pose) -> resetOdometry(pose), 
-            this::getChassisSpeeds, 
-            (robotRelativeSpeeds) -> driveRobotRelative(robotRelativeSpeeds), 
-            config.pathFollowerConfig, 
-            ()-> AllianceUtil.IS_RED_ALLIANCE,
-            this
-        );
+        RobotConfig robotConfig = null;
+        try {
+            robotConfig = RobotConfig.fromGUISettings();
+        } catch (Exception e) {
+            // Handle exception as needed
+            e.printStackTrace();
+        }
+
+
+        AutoBuilder.configure(
+            this::getPose2d, // Robot pose supplier
+            (pose) -> resetOdometry(pose), // Method to reset odometry (will be called if your auto has a starting pose)
+            this::getChassisSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+            (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
+            new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
+                    new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
+                    new PIDConstants(5.0, 0.0, 0.0) // Rotation PID constants
+            ),
+            robotConfig, // The robot configuration
+            () -> {
+              // Boolean supplier that controls when the path will be mirrored for the red alliance
+              // This will flip the path being followed to the red side of the field.
+              // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+              var alliance = DriverStation.getAlliance();
+              if (alliance.isPresent()) {
+                return alliance.get() == DriverStation.Alliance.Red;
+              }
+              return false;
+            },
+            this // Reference to this subsystem to set requirements
+    );
 
         SmartDashboard.putData("FieldOnlyOdometry", fieldOnlyOdometry);
         NtValueDisplay.ntDispTab("Drivetrain")
@@ -394,7 +423,7 @@ public class GenericSwerve extends SubsystemBase {
 
     /* Get raw gyroscope rotation */
     public Rotation2d getRawGyroRotation() {
-        return Rotation2d.fromDegrees(pigeon.getYaw().getValueAsDouble());
+        return pigeon.getRotation2d();
     }
 
     /* Get gyroscope rotation without apriltags */

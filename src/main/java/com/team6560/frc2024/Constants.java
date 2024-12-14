@@ -3,9 +3,6 @@ package com.team6560.frc2024;
 import com.swervedrivespecialties.swervelib.MotorType;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.pathplanner.lib.util.GeometryUtil;
-import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
-import com.pathplanner.lib.util.PIDConstants;
-import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -88,14 +85,6 @@ public final class Constants {
 
     // PathPlanner config
 
-    public static final HolonomicPathFollowerConfig PATH_FOLLOWER_CONFIG = new HolonomicPathFollowerConfig(
-      new PIDConstants( 0.15, 0.0, 0.0), // Translation constants 
-      new PIDConstants(2.5, 0, 0), // Rotation constants 
-      4.3, // Max velocity / 4 ,
-      Math.hypot(TRACKWIDTH_M / 2.0, WHEELBASE_M / 2.0),// Drive base radius (distance from center to furthest module) 
-      new ReplanningConfig(true, false)
-    );
-
     // Max velocities (required for controller in addition to drivetrain)
 
     public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0 *
@@ -110,10 +99,10 @@ public final class Constants {
   /* Gyro and odometry constants */
   public static class Odometry {
 
-    public static final Rotation2d DEFAULT_ROTATION_RED_ALLIANCE = new Rotation2d(Math.PI);
+    public static final Rotation2d DEFAULT_ROTATION_RED_ALLIANCE = new Rotation2d();
     public static final Rotation2d DEFAULT_ROTATION_BLUE_ALLIANCE = new Rotation2d();
 
-    public static final Pose2d DEFAULT_POSE_RED_ALLIANCE = GeometryUtil.flipFieldPose(new Pose2d());
+    public static final Pose2d DEFAULT_POSE_RED_ALLIANCE = new Pose2d();
     public static final Pose2d DEFAULT_POSE_BLUE_ALLIANCE = new Pose2d();
 
   }

@@ -1,12 +1,5 @@
 {
-  "version": 1.0,
-  "startingPose": {
-    "position": {
-      "x": 2.7,
-      "y": 4.12
-    },
-    "rotation": 180.0
-  },
+  "version": "2025.0",
   "command": {
     "type": "sequential",
     "data": {
@@ -33,6 +26,7 @@
       ]
     }
   },
-  "folder": "Four Ball",
+  "resetOdom": true,
+  "folder": null,
   "choreoAuto": false
 }

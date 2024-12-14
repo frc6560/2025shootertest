@@ -113,19 +113,13 @@ public class RobotContainer {
 
       autoChooser = new SendableChooser<Command>();
       autoChooser.addOption("No Auto", null);
-      autoChooser.addOption("Calibration", calibration());
+      // autoChooser.addOption("Calibration", calibration());
       SmartDashboard.putData("Auto Mode", autoChooser);
       SmartDashboard.putNumber("Auto Delay", 0);
   }
 
   public Command getAutonomousCommand() {
-    return calibration();
-  }
-
-  public Command calibration(){
-    return (new PathPlannerAuto("cali1"))
-    .andThen(new WaitCommand(3))
-    .andThen(new PathPlannerAuto("cali2"));
+    return (new PathPlannerAuto("thingauto"));
   }
 
 }
