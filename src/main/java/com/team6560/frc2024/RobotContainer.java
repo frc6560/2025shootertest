@@ -119,7 +119,7 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return null;
+    return calibration();
   }
 
   public Command calibration(){

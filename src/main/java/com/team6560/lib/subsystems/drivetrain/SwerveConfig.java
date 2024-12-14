@@ -130,14 +130,20 @@ public class SwerveConfig {
 
         // Default rotation and pose for both alliances
 
-        private Rotation2d defaultRotationRedAlliance = new Rotation2d(Math.PI);
+        // private Rotation2d defaultRotationRedAlliance = new Rotation2d(Math.PI);
+        // private Rotation2d defaultRotationBlueAlliance = new Rotation2d();
+        // private Pose2d defaultPoseRedAlliance = GeometryUtil.flipFieldPose(new Pose2d());
+        // private Pose2d defaultPoseBlueAlliance = new Pose2d();
+
+
+        private Rotation2d defaultRotationRedAlliance = new Rotation2d();
         private Rotation2d defaultRotationBlueAlliance = new Rotation2d();
-        private Pose2d defaultPoseRedAlliance = GeometryUtil.flipFieldPose(new Pose2d());
+        private Pose2d defaultPoseRedAlliance = new Pose2d();
         private Pose2d defaultPoseBlueAlliance = new Pose2d();
 
         // Change config if using auto
 
-        private HolonomicPathFollowerConfig pathFollowerConfig = new HolonomicPathFollowerConfig(4.3, 0.8172, new ReplanningConfig(true, false));
+        private HolonomicPathFollowerConfig pathFollowerConfig = new HolonomicPathFollowerConfig(1.0, 0.8172, new ReplanningConfig(true, false));
 
         public Builder setFLSteerCanID(int id) { this.FLSteerCanID = id; return this; }
         public Builder setFLDriveCanID(int id) { this.FLDriveCanID = id; return this; }
