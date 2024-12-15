@@ -9,6 +9,12 @@
           "data": {
             "pathName": "thing"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "thing2"
+          }
         }
       ]
     }
